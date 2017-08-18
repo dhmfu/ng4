@@ -35,10 +35,12 @@
 .sidenav > .body > .navigation{
     display: flex;
     align-items: stretch;
+    margin-bottom: 16px;
 }
 
-.sidenav > .body > .navigation span {
-    margin-left: 26px;
-    display: inline-block;
-    /*height: 100%;*/
+.sidenav > .body > .navigation > div {
+    display: inline-flex;
+    font-size: 16px;
+    margin-left: 32px;
+    align-items: center;
 }
