@@ -1,11 +1,44 @@
 .sidenav {
-  /*padding: 16px;*/
-  width: 200px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    width: 200px;
 }
 
 .sidenav > .header {
-    height: 200px;
-    padding: 32px 16px 8px 16px;
-    border-bottom: 1px solid white;
-    background: lightblue;
+    padding: 16px 16px 8px 16px;
+    border-bottom: 1px solid lightblue;
+}
+
+.sidenav > .header > .avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    float: left;
+}
+
+.sidenav > .header > .username {
+    display: inline-block;
+    height: 70px;
+    width: 98px;
+    line-height: 70px;
+    text-align: center;
+}
+
+.sidenav > .header > .logout {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.sidenav > .body {
+    padding: 8px 16px 0px 16px;
+}
+
+.sidenav > .body > .navigation{
+    display: flex;
+    align-items: stretch;
+}
+
+.sidenav > .body > .navigation span {
+    margin-left: 26px;
+    display: inline-block;
+    /*height: 100%;*/
 }
