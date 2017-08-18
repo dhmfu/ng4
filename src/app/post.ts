@@ -3,4 +3,5 @@ export class Post{
     description: string;
     creator: string;
     createdAt: string;
+    avatarUrl: string;
 }

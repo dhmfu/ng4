@@ -1,21 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
-import { Post } from './post';
-import { PostService } from './post.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [PostService]
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-    constructor(private postService: PostService) { }
-
-    title = 'app';
-    posts: Post[];
-
-    ngOnInit(): void {
-    this.postService.getPosts().then(res => this.posts = res);
-    }
+export class AppComponent{
+    title = 'Welcome';
 }

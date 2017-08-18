@@ -1,0 +1,20 @@
+<spinner *ngIf="loading"></spinner>
+
+<div class="post-content" *ngIf="!loading">
+    <md-card *ngFor="let post of posts" class="example-card">
+      <md-card-header>
+        <img src="{{post.avatarUrl}}" md-card-avatar/>
+        <md-card-title>{{post.creator}}</md-card-title>
+        <md-card-subtitle>{{post.createdAt | date}}</md-card-subtitle>
+      </md-card-header>
+      <md-card-content>
+        <p>
+          {{post.description}}
+        </p>
+      </md-card-content>
+      <md-card-actions>
+        <button md-button>LIKE</button>
+        <button md-button>SHARE</button>
+      </md-card-actions>
+    </md-card>
+</div>
