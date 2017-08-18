@@ -1,4 +1,4 @@
-<md-sidenav-container>
+<md-sidenav-container class="sidenav-container">
     <md-sidenav #allo class="sidenav">
         <div class="header">
             <img src="../assets/sample-avatar.png" class="avatar" alt="">
@@ -11,7 +11,7 @@
             <div class="navigation">
                 <md-icon>folder</md-icon>
                 <div>
-                    <span>Posts</span>
+                    <a routerLink="/posts">Posts</a>
                 </div>
             </div>
             <div class="navigation">
@@ -39,5 +39,6 @@
             <md-icon>menu</md-icon>
         </button>
     </md-toolbar>
-    <all-posts></all-posts>
+    <router-outlet></router-outlet>
+    <!-- <all-posts></all-posts> -->
 </md-sidenav-container>

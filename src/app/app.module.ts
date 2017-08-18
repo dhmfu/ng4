@@ -24,7 +24,7 @@ import { PostService }          from './post.service';
     RouterModule.forRoot([
       {
         path: 'posts',
-        component: AppComponent
+        component: PostsComponent
       }
     ]),
     MdListModule,

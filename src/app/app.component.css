@@ -1,3 +1,7 @@
+.sidenav-container {
+    height: 100%;
+}
+
 .sidenav {
     font-family: Roboto,"Helvetica Neue",sans-serif;
     width: 200px;
