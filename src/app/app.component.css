@@ -36,15 +36,7 @@
     padding: 8px 16px 0px 16px;
 }
 
-.sidenav > .body > .navigation{
-    display: flex;
-    align-items: stretch;
-    margin-bottom: 16px;
-}
-
-.sidenav > .body > .navigation > div {
-    display: inline-flex;
-    font-size: 16px;
-    margin-left: 32px;
-    align-items: center;
+.sidenav > .body > .navigation .path {
+  display: inline-block;
+  margin-left: 20px;
 }
