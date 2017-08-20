@@ -1,9 +1,17 @@
+.content {
+    margin-top: 30px;
+    padding: 0 300px;
+}
+
+.active {
+  color: red;
+}
+
 .sidenav-container {
     height: 100%;
 }
 
 .sidenav {
-    font-family: Roboto,"Helvetica Neue",sans-serif;
     width: 200px;
 }
 

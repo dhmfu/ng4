@@ -1,5 +1,5 @@
 <md-sidenav-container class="sidenav-container">
-    <md-sidenav #allo class="sidenav">
+    <md-sidenav #sidenav class="sidenav">
         <div class="header">
             <img src="../assets/sample-avatar.png" class="avatar" alt="">
             <span class="username">User</span>
@@ -9,13 +9,13 @@
         </div>
         <div class="body">
             <div class="navigation">
-              <a md-button routerLink="/posts">
+              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/posts">
                 <md-icon>folder</md-icon>
                 <div class="path">Posts</div>
               </a>
             </div>
             <div class="navigation">
-              <a md-button routerLink="/">
+              <a md-button routerLink="/new-post">
                 <md-icon>create_new_folder</md-icon>
                 <div class="path">New Post</div>
               </a>
@@ -35,10 +35,11 @@
         </div>
     </md-sidenav>
     <md-toolbar color="primary">
-        <button md-button (click)="allo.toggle()">
+        <button md-button (click)="sidenav.toggle()">
             <md-icon>menu</md-icon>
         </button>
     </md-toolbar>
-    <router-outlet></router-outlet>
-    <!-- <all-posts></all-posts> -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
 </md-sidenav-container>
