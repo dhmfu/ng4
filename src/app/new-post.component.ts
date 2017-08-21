@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 import { Post } from './post';
 import { PostService } from './post.service';
@@ -10,10 +12,18 @@ import { PostService } from './post.service';
   providers: [PostService]
 })
 export class NewPostComponent implements OnInit{
-    constructor(private postService: PostService) { }
+    constructor(private postService: PostService, private fb: FormBuilder) {
+        this.createForm();
+    }
 
-    newPost: Post;
-    // loading = true;
+    createForm() {
+        this.postForm = this.fb.group({
+            postText:  ['', [Validators.required, Validators.maxLength(1000)]],
+        });
+    }
+
+    newPost: string;
+    postForm :  FormGroup;
 
     ngOnInit(): void {
         // this.postService.getPosts().then(res => {
@@ -25,4 +35,16 @@ export class NewPostComponent implements OnInit{
         //     return post;
         // }));
     }
+
+    resizeInput(element): void {
+        element.style.height = element.scrollHeight + 'px';
+    }
+
+    onSubmit(): void {
+        let form = this.postForm;
+        if(!form.valid) return;
+        console.log(form.controls);
+        form.reset();
+    }
+
 }

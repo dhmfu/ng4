@@ -1,41 +1,10 @@
-<form class="example-form">
-  <md-input-container class="example-full-width">
-    <input mdInput placeholder="Company (disabled)" disabled value="Google">
-  </md-input-container>
-
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="First name">
-    </md-input-container></td>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="Long Last Name That Will Be Truncated">
-    </md-input-container></td>
-  </tr></table>
-
-  <p>
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
     <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+        <textarea name="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
+        required maxlength="1000" #address mdInput placeholder="Address">
+        </textarea>
+        <md-hint align="end">{{address.value.length}} / 1000</md-hint>
     </md-input-container>
-    <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Address 2"></textarea>
-    </md-input-container>
-  </p>
-
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="City">
-    </md-input-container></td>
-    <td><md-input-container class="example-full-width">
-      <input mdInput placeholder="State">
-    </md-input-container></td>
-    <td><md-input-container class="example-full-width">
-      <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
-      <md-hint align="end">{{postalCode.value.length}} / 5</md-hint>
-    </md-input-container></td>
-  </tr></table>
+    <button type="submit" md-button>Post</button>
+    <p>Form status: {{ postForm.status | json }}</p>
 </form>
-
-
-<!-- Copyright 2017 Google Inc. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at http://angular.io/license -->
