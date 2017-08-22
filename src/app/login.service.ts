@@ -20,28 +20,45 @@ export class LoginService {
                .catch(this.handleError);
     }
 
+    logout(): Promise<any> {
+        let options = new RequestOptions({ headers: new Headers({'x-access-token': localStorage.getItem('token')})});
+
+        return this.http.post('http://localhost:3000/api/logout', {}, options)
+               .toPromise()
+               .then(response => {
+                   localStorage.removeItem('token');
+                   console.log(response);
+                   return response.json();
+               })
+               .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     }
 }
 
-export class UserToken {}
-export class Permissions {
-  canActivate(user: UserToken, id: string): boolean {
-    return true;
-  }
-}
-
 @Injectable()
 export class LoggedIn implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: Http) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Promise<boolean>|boolean {
-    this.router.navigate(['login']);
-    return false;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean>|boolean {
+
+      let forLogin = route.url[0].path == 'new-post' || route.url[0].path == 'login';
+
+      let url = 'http://localhost:3000/api/loggedin?token='
+      +localStorage.getItem("token")+'&forLogin='+forLogin;
+
+      return this.http.get(url).toPromise()
+             .then(response => {
+                //  console.log(response.json());
+                 return true;
+             })
+             .catch(error => {
+                //  console.error('An error occurred', error);
+                 return false;
+             });
   }
+
 }
