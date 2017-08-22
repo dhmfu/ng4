@@ -1,0 +1,15 @@
+.example-full-width {
+  width: 100%;
+}
+
+.submit {
+    text-align: right;
+}
+
+.login-header {
+    text-align: center;
+}
+
+#loginForm {
+    margin: 0 250px;
+}

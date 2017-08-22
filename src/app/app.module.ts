@@ -5,24 +5,28 @@ import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';  // <-- #1 import module
 
-import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule} from '@angular/material';
+import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login.component';
 import { PostsComponent } from './posts.component';
 import { NewPostComponent } from './new-post.component';
 import { SpinnerComponent } from './spinner.component';
 
 import { PostService }          from './post.service';
+import { LoginService }          from './login.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     PostsComponent,
     NewPostComponent,
-    SpinnerComponent
+    SpinnerComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,10 @@ import { PostService }          from './post.service';
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot([
+      {
+        path: 'login',
+        component: LoginComponent
+      },
       {
         path: 'posts',
         component: PostsComponent
@@ -52,9 +60,10 @@ import { PostService }          from './post.service';
     MdButtonModule,
     MdProgressSpinnerModule,
     MdSidenavModule,
-    MdInputModule
+    MdInputModule,
+    MdCheckboxModule
   ],
-  providers: [PostService],
+  providers: [PostService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

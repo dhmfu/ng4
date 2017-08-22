@@ -1,11 +1,18 @@
+<h1>Create a new post</h1>
 <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
-    <md-input-container class="example-full-width">
-        <textarea name="postText" id="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
-        required maxlength="1000" #address mdInput placeholder="Type your thoughts here">
-        </textarea>
-        <md-hint align="end">{{address.value.length}} / 1000</md-hint>
-    </md-input-container>
-    <div class="submit">
-        <button type="submit" md-button>Post</button>
-    </div>
+    <md-card>
+        <md-card-content>
+            <md-input-container class="example-full-width">
+                <textarea name="postText" id="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
+                required maxlength="1000" #address mdInput placeholder="Type your thoughts here">
+                </textarea>
+                <md-hint align="end">{{address.value.length}} / 1000</md-hint>
+            </md-input-container>
+        </md-card-content>
+        <md-card-actions>
+            <div class="submit">
+                <button type="submit" md-button>Post</button>
+            </div>
+        </md-card-actions>
+    </md-card>
 </form>
