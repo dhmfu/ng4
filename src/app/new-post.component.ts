@@ -15,6 +15,9 @@ export class NewPostComponent implements OnInit{
     constructor(private postService: PostService, private fb: FormBuilder) {
         this.createForm();
     }
+    newPost: string;
+    postForm :  FormGroup;
+    postSize: number;
 
     createForm() {
         this.postForm = this.fb.group({
@@ -22,18 +25,10 @@ export class NewPostComponent implements OnInit{
         });
     }
 
-    newPost: string;
-    postForm :  FormGroup;
 
     ngOnInit(): void {
-        // this.postService.getPosts().then(res => {
-        //     this.loading = false;
-        //     this.posts = res.slice(0,5);
-        // })
-        // .then(()=>this.posts.map((post)=>{
-        //     post.avatarUrl = post.avatarUrl || '../assets/sample-avatar.png';
-        //     return post;
-        // }));
+        this.postSize = document.getElementById('postText').clientHeight;
+        console.log(this.postSize);
     }
 
     resizeInput(element): void {
@@ -43,7 +38,10 @@ export class NewPostComponent implements OnInit{
     onSubmit(): void {
         let form = this.postForm;
         if(!form.valid) return;
-        this.postService.sendPost(form.get('postText').value).then(res => console.log(res));
+        this.postService.sendPost(form.get('postText').value).then(res => {
+            console.log(res);
+            document.getElementById('postText').style.height = this.postSize + 'px';
+        });
         //send to server
         form.reset();
     }

@@ -1,7 +1,7 @@
 <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
     <md-input-container class="example-full-width">
-        <textarea name="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
-        required maxlength="1000" #address mdInput placeholder="Address">
+        <textarea name="postText" id="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
+        required maxlength="1000" #address mdInput placeholder="Type your thoughts here">
         </textarea>
         <md-hint align="end">{{address.value.length}} / 1000</md-hint>
     </md-input-container>

@@ -12,19 +12,43 @@ export class PostService {
     getPosts(): Promise<Post[]> {
         return this.http.get('http://localhost:3000/api/posts')
                .toPromise()
-               .then(response => response.json() as Post[])
+               .then(response => {
+                   let posts = response.json();
+                //    posts.forEach(post=>{
+                //        delete post.__v;
+                //        delete post._id;
+                //    });
+                   return posts as Post[];
+               })
                .catch(this.handleError);
     }
 
-    sendPost(post): Promise<any> {
-        let body = JSON.stringify({post:post});
-        console.log(body);
-        let options       = new RequestOptions({ headers: this.headers}); // Create a request option
-
+    sendPost(postText): Promise<any> {
+        let body = JSON.stringify({description:postText.trim()});
+        let options = new RequestOptions({ headers: this.headers});
 
         return this.http.post('http://localhost:3000/api/posts/test', body, options)
                .toPromise()
                .then(response => response.json())
+               .catch(this.handleError);
+    }
+
+    deletePost(postId): Promise<any> {
+        let options = new RequestOptions({ headers: this.headers});
+
+        return this.http.delete('http://localhost:3000/api/posts/test/'+postId)
+               .toPromise()
+               .then(response => response)
+               .catch(this.handleError);
+    }
+
+    editPost(post): Promise<any> {
+        let body = JSON.stringify({description:post.description.trim()});
+        let options = new RequestOptions({ headers: this.headers});
+
+        return this.http.patch('http://localhost:3000/api/posts/test/'+post._id, body, options)
+               .toPromise()
+               .then(response => response)
                .catch(this.handleError);
     }
 
