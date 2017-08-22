@@ -43,7 +43,8 @@ export class NewPostComponent implements OnInit{
     onSubmit(): void {
         let form = this.postForm;
         if(!form.valid) return;
-        console.log(form.controls);
+        this.postService.sendPost(form.get('postText').value).then(res => console.log(res));
+        //send to server
         form.reset();
     }
 

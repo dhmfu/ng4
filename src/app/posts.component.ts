@@ -23,6 +23,11 @@ export class PostsComponent implements OnInit{
         .then(()=>this.posts.map((post)=>{
             post.avatarUrl = post.avatarUrl || '../assets/sample-avatar.png';
             return post;
-        }));
+        }))
+        .catch(err=>{
+            // this.loading = false;
+            //TODO: display error message
+            console.log(err);
+        });
     }
 }
