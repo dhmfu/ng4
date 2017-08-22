@@ -15,8 +15,8 @@ import { PostsComponent } from './posts.component';
 import { NewPostComponent } from './new-post.component';
 import { SpinnerComponent } from './spinner.component';
 
-import { PostService }          from './post.service';
-import { LoginService }          from './login.service';
+import { PostService } from './post.service';
+import { LoginService, LoggedIn } from './login.service';
 
 
 @NgModule({
@@ -25,8 +25,7 @@ import { LoginService }          from './login.service';
     LoginComponent,
     PostsComponent,
     NewPostComponent,
-    SpinnerComponent,
-
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +43,8 @@ import { LoginService }          from './login.service';
       },
       {
         path: 'new-post',
-        component: NewPostComponent
+        component: NewPostComponent,
+        canActivate: [LoggedIn]
       },
       {
         path: '',
@@ -63,7 +63,7 @@ import { LoginService }          from './login.service';
     MdInputModule,
     MdCheckboxModule
   ],
-  providers: [PostService, LoginService],
+  providers: [PostService, LoginService, LoggedIn],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -22,4 +24,24 @@ export class LoginService {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     }
+}
+
+export class UserToken {}
+export class Permissions {
+  canActivate(user: UserToken, id: string): boolean {
+    return true;
+  }
+}
+
+@Injectable()
+export class LoggedIn implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean>|boolean {
+    this.router.navigate(['login']);
+    return false;
+  }
 }
