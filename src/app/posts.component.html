@@ -14,8 +14,7 @@
             </md-card-content>
             <md-card-actions *ngIf="user.id">
                 <button md-button (click)="delete(post)" *ngIf="hasRights(post)">DELETE</button>
-                <button md-button (click)="edit(post, $event)" *ngIf="hasRights(post)">EDIT</button>
-                <button md-button (click)="openDialog(post)">Open dialog</button>
+                <button md-button (click)="edit(post)" *ngIf="hasRights(post)">EDIT</button>
             </md-card-actions>
         </md-card>
     </div>

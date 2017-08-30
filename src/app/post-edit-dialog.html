@@ -1,7 +1,7 @@
 <h1 md-dialog-title>Fancy Editor</h1>
 <div md-dialog-content>
     <md-input-container class="example-full-width">
-        <textarea name="postText" required maxlength="1000" #address
+        <textarea id="postText" name="postText" required maxlength="1000" #address (keyup)="resizeInput($event.target)"
         mdInput placeholder="Type your thoughts here" [(ngModel)]="post.description">
         </textarea>
         <md-hint align="end">{{address.value.length}} / 1000</md-hint>

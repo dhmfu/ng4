@@ -49,66 +49,29 @@ export class PostsComponent implements OnInit{
             });
     }
 
-    openDialog(post: Post) {
+    edit(post: Post) {
         let dialogRef = this.dialog.open(PostEditDialog, {
             data: post,
-            height: '400px',
-            width: '600px'
+            height: '80%',
+            width: '60%'
         });
 
         dialogRef.afterClosed().subscribe((data:any)=>{
             if(data) {
                 let postToFind: Post = data.post, newText: string = data.text;
-                this.posts.find((currentPost: Post)=>{
-                    return currentPost == postToFind;
-                }).description = newText;
+                this.loading = true;
+                this.postService.editPost({description: newText, _id: postToFind._id}).then((res)=>{
+                    this.posts.find((currentPost: Post)=>{
+                        return currentPost == postToFind;
+                    }).description = newText;
+                    this.loading = false;
+                    console.log(res);
+                }).catch((err)=>{
+                    this.loading = false;
+                    console.log(err);
+                });
             }
         });
-    }
-
-    edit(post: Post, event): void {
-        // let text = event.target.closest('.mat-card-actions').previousElementSibling.childNodes[1];
-        // text.setAttribute('contenteditable','true');
-        // text.focus();
-        //
-        // let customSelection = () =>{
-        //     let selection = window.getSelection(); //all this
-        //     let range = document.createRange();    //for focusing
-        //     range.setStart(text,0);                //editable
-        //     range.setEnd(text,1);                  //paragraph
-        //     selection.addRange(range);             //on it's
-        //     return selection;                      //end
-        // };
-        //
-        // let selection = customSelection();
-        // selection.collapseToEnd();
-        //
-        // let blurEditFunc = (event: Event) => {
-        //     let selection = customSelection();
-        //     let newText = selection.toString().trim();
-        //     console.log(newText); //SEND POST TO SERVER
-        //     selection.collapseToEnd();
-        //     text.removeEventListener('blur', blurEditFunc);
-        //     text.setAttribute('contenteditable','false');
-        // };
-        //
-        // let keysEditFunc = (event: KeyboardEvent) => {
-        //     if(event.keyCode == 13 && !event.shiftKey){
-        //         event.preventDefault();
-        //         text.removeEventListener('keydown', keysEditFunc);
-        //         blurEditFunc(event);
-        //     }
-        // };
-        // text.addEventListener('blur', blurEditFunc);
-        // text.addEventListener('keydown', keysEditFunc);
-        // this.postService.editPost({description: 'blabla', _id: '59954e2400c16f453c4351af'}).then(res => {
-        //     console.log(res);
-        // })
-        // .catch(err=>{
-        //     // this.loading = false;
-        //     //TODO: display error message
-        //     console.log(err);
-        // });
     }
 
     hasRights(post): boolean {
@@ -124,22 +87,29 @@ export class PostsComponent implements OnInit{
 export class PostEditDialog implements OnInit{
   constructor(public dialogRef: MdDialogRef<PostEditDialog>,
       @Inject(MD_DIALOG_DATA) public data: Post) {
+          this.post = Object.assign({}, this.data);
+          this.post.description = this.post.description.replace(/<br[/]>/g, '\n');
   }
 
   post: Post;
 
   ngOnInit(): void {
+      let textarea = document.getElementById('postText');
+      textarea.addEventListener('focus', (event: Event) => {
+          textarea.style.height = textarea.scrollHeight + 'px';
+      });
+  }
 
-          this.post = Object.assign({}, this.data);
-          this.post.description = this.post.description.replace(/<br[/]>/g, '\n');
+  resizeInput(element): void {
+      element.style.height = element.scrollHeight + 'px';
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+      this.dialogRef.close();
   }
 
   onYesClick(): void {
-      this.post.description = this.post.description.replace(/\n/g, '<br/>');
+      this.post.description = this.post.description.trim().replace(/\n/g, '<br/>');
       console.log(this.post);
       this.dialogRef.close({post: this.data, text: this.post.description});
   }
