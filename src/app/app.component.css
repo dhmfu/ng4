@@ -9,8 +9,8 @@
     }
 }
 
-.active {
-  color: red;
+.active .path{
+    text-decoration: underline;
 }
 
 .sidenav-container {

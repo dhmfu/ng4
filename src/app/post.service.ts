@@ -7,7 +7,7 @@ import { Post } from './post';
 export class PostService {
     constructor(private http: Http) { }
 
-    private headers = new Headers({'Content-Type': 'text/plain'});
+    private headers = new Headers({'Content-Type': 'text/plain', 'x-access-token': localStorage.getItem('token')});
 
     getPosts(): Promise<Post[]> {
         return this.http.get('http://localhost:3000/api/posts')
@@ -23,8 +23,8 @@ export class PostService {
                .catch(this.handleError);
     }
 
-    sendPost(postText): Promise<any> {
-        let body = JSON.stringify({description:postText.trim()});
+    sendPost(postText: string): Promise<any> {
+        let body = JSON.stringify({description:postText.trim().replace(/\n/g, '<br/>')});
         let options = new RequestOptions({ headers: this.headers});
 
         return this.http.post('http://localhost:3000/api/posts/test', body, options)
@@ -33,10 +33,11 @@ export class PostService {
                .catch(this.handleError);
     }
 
-    deletePost(postId): Promise<any> {
+    deletePost(postId, user): Promise<any> {
+        this.headers.append('x-user-id', user.id);
         let options = new RequestOptions({ headers: this.headers});
 
-        return this.http.delete('http://localhost:3000/api/posts/test/'+postId)
+        return this.http.delete('http://localhost:3000/api/posts/'+postId, options)
                .toPromise()
                .then(response => response)
                .catch(this.handleError);

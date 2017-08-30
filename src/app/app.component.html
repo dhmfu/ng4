@@ -2,9 +2,12 @@
     <md-sidenav #sidenav class="sidenav">
         <div class="header">
             <img src="../assets/sample-avatar.png" class="avatar" alt="">
-            <span class="username">User</span>
+            <span class="username">{{user.username}}</span>
             <div class="logout">
-                <button md-raised-button (click)="logout()">LOGOUT</button>
+                <button md-raised-button (click)="logout(); sidenav.toggle()" *ngIf="user.id; else elseBlock">LOGOUT</button>
+                <ng-template #elseBlock>
+                    <a md-raised-button (click)="sidenav.toggle()" routerLink="/login">LOGIN</a>
+                </ng-template>
             </div>
         </div>
         <div class="body">
@@ -15,27 +18,21 @@
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/new-post">
+              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/new-post" *ngIf="user.id">
                 <md-icon>create_new_folder</md-icon>
                 <div class="path">New Post</div>
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/">
+              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/" *ngIf="user.superAdmin">
                 <md-icon>person</md-icon>
                 <div class="path">Users</div>
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/">
+              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/" *ngIf="user.superAdmin">
                 <md-icon>person_add</md-icon>
                 <div class="path">New User</div>
-              </a>
-            </div>
-            <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/login">
-                <md-icon>account_circle</md-icon>
-                <div class="path">Login</div>
               </a>
             </div>
         </div>

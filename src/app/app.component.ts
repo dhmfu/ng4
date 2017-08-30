@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, Event, NavigationEnd } from '@angular/router';
+
 
 import { LoginService } from './login.service';
 @Component({
@@ -8,14 +9,27 @@ import { LoginService } from './login.service';
   styleUrls: ['./app.component.css'],
   providers: [LoginService]
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
     constructor(private loginService: LoginService, private router: Router){}
-    title = 'Welcome';
+
+    user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
+
+    ngOnInit(): void {
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
+                //keep user up-to-date everytime route changes
+            }
+        });
+    }
 
     logout(): void {
         this.loginService.logout().then(response => {
             console.log(response);
-            this.router.navigate(['posts']);
+            this.user = {username: 'Guest'};
+            this.router.navigate(['posts']).then(()=>{
+                window.location.reload();
+            });
         });
     }
 }

@@ -40,8 +40,11 @@ export class LoginComponent implements OnInit{
         this.loginService.login({name: form.get('username').value, password: form.get('password').value})
         .then(res => {
             console.log(res);
+            console.log(atob(res.token.split('.')[1]));
+            var user = atob(res.token.split('.')[1]);
+            localStorage.setItem('user', user);
             localStorage.setItem('token', res.token);
-            this.router.navigate(['/posts']);
+            this.router.navigate(['posts']);
         })
         .catch(err => {
             console.log(err);

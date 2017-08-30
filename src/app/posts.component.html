@@ -1,21 +1,22 @@
-<spinner *ngIf="loading"></spinner>
+<spinner *ngIf="loading; else elseBlock"></spinner>
 
-<div *ngIf="!loading">
-    <h1>Board</h1>
-    <md-card *ngFor="let post of posts" class="example-card">
-      <md-card-header>
-        <img src="{{post.avatarUrl}}" md-card-avatar/>
-        <md-card-title>{{post.creator}}</md-card-title>
-        <md-card-subtitle>{{post.createdAt | date}}</md-card-subtitle>
-      </md-card-header>
-      <md-card-content>
-        <p>
-          {{post.description}}
-        </p>
-      </md-card-content>
-      <md-card-actions>
-        <button md-button (click)="delete(post)">DELETE</button>
-        <button md-button (click)="edit()">EDIT</button>
-      </md-card-actions>
-    </md-card>
-</div>
+<ng-template #elseBlock>
+    <div>
+        <h1>Board</h1>
+        <md-card *ngFor="let post of posts" class="example-card">
+            <md-card-header>
+                <img src="{{post.avatarUrl}}" md-card-avatar/>
+                <md-card-title>{{post.creator}}</md-card-title>
+                <md-card-subtitle>{{post.createdAt | date}}</md-card-subtitle>
+            </md-card-header>
+            <md-card-content>
+                <p [innerHtml]="post.description"></p>
+            </md-card-content>
+            <md-card-actions *ngIf="user.id">
+                <button md-button (click)="delete(post)" *ngIf="hasRights(post)">DELETE</button>
+                <button md-button (click)="edit(post, $event)" *ngIf="hasRights(post)">EDIT</button>
+                <button md-button (click)="openDialog(post)">Open dialog</button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</ng-template>

@@ -28,7 +28,6 @@ export class NewPostComponent implements OnInit{
 
     ngOnInit(): void {
         this.postSize = document.getElementById('postText').clientHeight;
-        console.log(this.postSize);
     }
 
     resizeInput(element): void {
@@ -39,10 +38,8 @@ export class NewPostComponent implements OnInit{
         let form = this.postForm;
         if(!form.valid) return;
         this.postService.sendPost(form.get('postText').value).then(res => {
-            console.log(res);
             document.getElementById('postText').style.height = this.postSize + 'px';
         });
-        //send to server
         form.reset();
     }
 

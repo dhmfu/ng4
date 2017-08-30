@@ -5,13 +5,13 @@ import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';  // <-- #1 import module
 
-import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule} from '@angular/material';
+import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
-import { PostsComponent } from './posts.component';
+import { PostsComponent, PostEditDialog } from './posts.component';
 import { NewPostComponent } from './new-post.component';
 import { SpinnerComponent } from './spinner.component';
 
@@ -24,6 +24,7 @@ import { LoginService, LoggedIn } from './login.service';
     AppComponent,
     LoginComponent,
     PostsComponent,
+    PostEditDialog,
     NewPostComponent,
     SpinnerComponent
   ],
@@ -61,9 +62,13 @@ import { LoginService, LoggedIn } from './login.service';
     MdProgressSpinnerModule,
     MdSidenavModule,
     MdInputModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    MdDialogModule
   ],
   providers: [PostService, LoginService, LoggedIn],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+      PostEditDialog
+  ]
 })
 export class AppModule { }
