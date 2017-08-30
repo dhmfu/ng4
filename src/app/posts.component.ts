@@ -24,7 +24,6 @@ export class PostsComponent implements OnInit{
             this.loading = false;
             this.allPosts = res;
             this.posts = this.allPosts.slice(0,5);
-            console.log(this.posts);
         })
         .then(()=>this.posts.map((post)=>{
             post.avatarUrl = post.avatarUrl || '../assets/sample-avatar.png';
@@ -65,7 +64,6 @@ export class PostsComponent implements OnInit{
                         return currentPost == postToFind;
                     }).description = newText;
                     this.loading = false;
-                    console.log(res);
                 }).catch((err)=>{
                     this.loading = false;
                     console.log(err);
@@ -110,7 +108,6 @@ export class PostEditDialog implements OnInit{
 
   onYesClick(): void {
       this.post.description = this.post.description.trim().replace(/\n/g, '<br/>');
-      console.log(this.post);
       this.dialogRef.close({post: this.data, text: this.post.description});
   }
 }

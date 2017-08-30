@@ -27,7 +27,7 @@ export class PostService {
         let body = JSON.stringify({description:postText.trim().replace(/\n/g, '<br/>')});
         let options = new RequestOptions({ headers: this.headers});
 
-        return this.http.post('http://localhost:3000/api/posts/test', body, options)
+        return this.http.post('http://localhost:3000/api/posts/new', body, options)
                .toPromise()
                .then(response => response.json())
                .catch(this.handleError);
@@ -47,7 +47,7 @@ export class PostService {
         let body = JSON.stringify({description:post.description.trim()});
         let options = new RequestOptions({ headers: this.headers});
 
-        return this.http.patch('http://localhost:3000/api/posts/test/'+post._id, body, options)
+        return this.http.patch('http://localhost:3000/api/posts/'+post._id, body, options)
                .toPromise()
                .then(response => response)
                .catch(this.handleError);
