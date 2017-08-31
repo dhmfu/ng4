@@ -24,12 +24,18 @@ export class AppComponent implements OnInit{
     }
 
     logout(): void {
-        this.loginService.logout().then(response => {
-            console.log(response);
-            this.user = {username: 'Guest'};
-            this.router.navigate(['posts']).then(()=>{
-                window.location.reload();
-            });
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.user = {username: 'Guest'};
+        this.router.navigate(['posts']).then(()=>{
+            window.location.reload();
         });
+        // this.loginService.logout().then(response => {
+        //     console.log(response);
+        //     this.user = {username: 'Guest'};
+        //     this.router.navigate(['posts']).then(()=>{
+        //         window.location.reload();
+        //     });
+        // });
     }
 }

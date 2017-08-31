@@ -13,10 +13,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import { PostsComponent, PostEditDialog } from './posts.component';
 import { NewPostComponent } from './new-post.component';
+import { UsersComponent } from './users.component';
 import { SpinnerComponent } from './spinner.component';
 
 import { PostService } from './post.service';
 import { LoginService, LoggedIn } from './login.service';
+import { UserService } from './users.service';
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { LoginService, LoggedIn } from './login.service';
     PostsComponent,
     PostEditDialog,
     NewPostComponent,
+    UsersComponent,
     SpinnerComponent
   ],
   imports: [
@@ -48,6 +51,10 @@ import { LoginService, LoggedIn } from './login.service';
         canActivate: [LoggedIn]
       },
       {
+        path: 'users',
+        component: UsersComponent
+      },
+      {
         path: '',
         redirectTo: '/posts',
         pathMatch: 'full'
@@ -65,7 +72,7 @@ import { LoginService, LoggedIn } from './login.service';
     MdCheckboxModule,
     MdDialogModule
   ],
-  providers: [PostService, LoginService, LoggedIn],
+  providers: [PostService, LoginService, LoggedIn, UserService],
   bootstrap: [AppComponent],
   entryComponents: [
       PostEditDialog

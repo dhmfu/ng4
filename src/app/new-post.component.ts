@@ -39,8 +39,8 @@ export class NewPostComponent implements OnInit{
         if(!form.valid) return;
         this.postService.sendPost(form.get('postText').value).then(res => {
             document.getElementById('postText').style.height = this.postSize + 'px';
+            form.reset();
         });
-        form.reset();
     }
 
 }

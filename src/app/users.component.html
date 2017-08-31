@@ -1,0 +1,20 @@
+<h1>Hello</h1>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+    <md-card>
+        <md-card-content>
+            <md-input-container class="example-full-width">
+                <input formControlName="username" required maxlength="60" #username mdInput placeholder="username" type="name">
+                <md-hint align="end">{{username.value.length}} / 60</md-hint>
+            </md-input-container>
+            <md-input-container class="example-full-width">
+                <input formControlName="password" required #password mdInput placeholder="password" type="password">
+            </md-input-container>
+            <md-checkbox class="example-margin" formControlName="superAdmin">Super-Admin</md-checkbox>
+        </md-card-content>
+        <md-card-actions>
+            <div class="submit">
+                <button type="submit" md-button>Post</button>
+            </div>
+        </md-card-actions>
+    </md-card>
+</form>

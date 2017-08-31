@@ -24,15 +24,9 @@
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/" *ngIf="user.superAdmin">
+              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/users" *ngIf="user.superAdmin">
                 <md-icon>person</md-icon>
                 <div class="path">Users</div>
-              </a>
-            </div>
-            <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/" *ngIf="user.superAdmin">
-                <md-icon>person_add</md-icon>
-                <div class="path">New User</div>
               </a>
             </div>
         </div>
