@@ -22,13 +22,10 @@ export class PostsComponent implements OnInit{
     ngOnInit(): void {
         this.postService.getPosts().then(res => {
             this.loading = false;
-            this.allPosts = res;
-            this.posts = this.allPosts.slice(0,5);
+            this.posts = res;
+            // this.allPosts = res;
+            // this.posts = this.allPosts.slice(0,5);
         })
-        .then(()=>this.posts.map((post)=>{
-            post.avatarUrl = post.avatarUrl || '../assets/sample-avatar.png';
-            return post;
-        }))
         .catch(err=>{
             // this.loading = false;
             //TODO: display error message
@@ -39,7 +36,7 @@ export class PostsComponent implements OnInit{
     delete(post: Post): void {
         if(confirm('Sure?'))
             this.postService.deletePost(post._id, this.user).then(res => {
-                window.location.reload();
+                this.posts.splice(this.posts.indexOf(post),1);
             })
             .catch(err=>{
                 // this.loading = false;
@@ -70,6 +67,10 @@ export class PostsComponent implements OnInit{
                 });
             }
         });
+    }
+
+    onNewPost(post: Post): void {
+        this.posts.push(post);
     }
 
     hasRights(post: Post): boolean {

@@ -18,12 +18,6 @@
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/new-post" *ngIf="user.id">
-                <md-icon>create_new_folder</md-icon>
-                <div class="path">New Post</div>
-              </a>
-            </div>
-            <div class="navigation">
               <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/users" *ngIf="user.superAdmin">
                 <md-icon>person</md-icon>
                 <div class="path">Users</div>

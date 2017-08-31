@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
@@ -12,6 +12,8 @@ import { PostService } from './post.service';
   providers: [PostService]
 })
 export class NewPostComponent implements OnInit{
+    @Output() onSend = new EventEmitter<Post>();
+
     constructor(private postService: PostService, private fb: FormBuilder) {
         this.createForm();
     }
@@ -37,8 +39,9 @@ export class NewPostComponent implements OnInit{
     onSubmit(): void {
         let form = this.postForm;
         if(!form.valid) return;
-        this.postService.sendPost(form.get('postText').value).then(res => {
+        this.postService.sendPost(form.get('postText').value).then( (res: Post) => {
             document.getElementById('postText').style.height = this.postSize + 'px';
+            this.onSend.emit(res);
             form.reset();
         });
     }

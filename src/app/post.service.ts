@@ -13,14 +13,17 @@ export class PostService {
         return this.http.get('http://localhost:3000/api/posts')
                .toPromise()
                .then(response => {
-                   let posts = response.json();
-                //    posts.forEach(post=>{
-                //        delete post.__v;
-                //        delete post._id;
-                //    });
+                   let posts: Array<any> = response.json();
+                   posts.map(this.preparePost);
                    return posts as Post[];
                })
                .catch(this.handleError);
+    }
+
+    preparePost(post): Post {
+        delete post.__v;
+        post.avatarUrl = post.avatarUrl || '../assets/sample-avatar.png';
+        return post as Post;
     }
 
     sendPost(postText: string): Promise<any> {
@@ -29,7 +32,7 @@ export class PostService {
 
         return this.http.post('http://localhost:3000/api/posts/new', body, options)
                .toPromise()
-               .then(response => response.json())
+               .then(response => this.preparePost(response.json()) as Post)
                .catch(this.handleError);
     }
 

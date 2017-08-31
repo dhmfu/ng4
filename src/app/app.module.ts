@@ -46,11 +46,6 @@ import { UserService } from './users.service';
         component: PostsComponent
       },
       {
-        path: 'new-post',
-        component: NewPostComponent,
-        canActivate: [LoggedIn]
-      },
-      {
         path: 'users',
         component: UsersComponent
       },

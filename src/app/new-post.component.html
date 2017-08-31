@@ -1,10 +1,9 @@
-<h1>Create a new post</h1>
 <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
     <md-card>
         <md-card-content>
             <md-input-container class="example-full-width">
                 <textarea name="postText" id="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
-                required maxlength="1000" #address mdInput placeholder="Type your thoughts here">
+                required maxlength="1000" #address mdInput placeholder="Create a new post">
                 </textarea>
                 <md-hint align="end">{{address.value.length}} / 1000</md-hint>
             </md-input-container>
