@@ -34,7 +34,7 @@ export class PostService {
     }
 
     deletePost(postId, user): Promise<any> {
-        this.headers.append('x-user-id', user.id);
+        this.headers.append('x-user-username', user.username);
         let options = new RequestOptions({ headers: this.headers});
 
         return this.http.delete('http://localhost:3000/api/posts/'+postId, options)
@@ -44,7 +44,7 @@ export class PostService {
     }
 
     editPost(post): Promise<any> {
-        let body = JSON.stringify({description:post.description.trim()});
+        let body = JSON.stringify({description:post.description.trim(), creator: post.creator});
         let options = new RequestOptions({ headers: this.headers});
 
         return this.http.patch('http://localhost:3000/api/posts/'+post._id, body, options)

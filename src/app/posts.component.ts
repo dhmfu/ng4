@@ -59,7 +59,7 @@ export class PostsComponent implements OnInit{
             if(data) {
                 let postToFind: Post = data.post, newText: string = data.text;
                 this.loading = true;
-                this.postService.editPost({description: newText, _id: postToFind._id}).then((res)=>{
+                this.postService.editPost({description: newText, _id: postToFind._id, creator: postToFind.creator}).then((res)=>{
                     this.posts.find((currentPost: Post)=>{
                         return currentPost == postToFind;
                     }).description = newText;
@@ -72,8 +72,8 @@ export class PostsComponent implements OnInit{
         });
     }
 
-    hasRights(post): boolean {
-        return post.creatorId == this.user.id || this.user.superAdmin;
+    hasRights(post: Post): boolean {
+        return post.creator == this.user.username || this.user.superAdmin;
     }
 }
 

@@ -27,9 +27,7 @@ export class AppComponent implements OnInit{
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         this.user = {username: 'Guest'};
-        this.router.navigate(['posts']).then(()=>{
-            window.location.reload();
-        });
+        this.router.navigate(['login']);
         // this.loginService.logout().then(response => {
         //     console.log(response);
         //     this.user = {username: 'Guest'};

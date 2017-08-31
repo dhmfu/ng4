@@ -47,17 +47,18 @@ export class LoggedIn implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean>|boolean {
 
       let forLogin = route.url[0].path == 'new-post' || route.url[0].path == 'login';
+      console.log(forLogin);
 
       let url = 'http://localhost:3000/api/loggedin?token='
       +localStorage.getItem("token")+'&forLogin='+forLogin;
 
       return this.http.get(url).toPromise()
              .then(response => {
-                //  console.log(response.json());
+                 console.log(response.json());
                  return true;
              })
              .catch(error => {
-                //  console.error('An error occurred', error);
+                 console.error('An error occurred', error);
                  return false;
              });
   }
