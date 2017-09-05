@@ -28,7 +28,6 @@ export class LoginService {
                .then(response => {
                    localStorage.removeItem('token');
                    localStorage.removeItem('user');
-                   console.log(response);
                    return response.json();
                })
                .catch(this.handleError);
@@ -46,21 +45,25 @@ export class LoggedIn implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean>|boolean {
 
-      let forLogin = route.url[0].path == 'new-post' || route.url[0].path == 'login';
-      console.log(forLogin);
+      let forLogin = route.url[0].path == 'login';
 
       let url = 'http://localhost:3000/api/loggedin?token='
       +localStorage.getItem("token")+'&forLogin='+forLogin;
 
+      let canGo = response => {
+          return true;
+      };
+
+      let cannotGo = response => {
+          this.router.navigate(['posts']);
+          return false;
+      };
+
+      let f1 = forLogin ? cannotGo : canGo;
+      let f2 = !forLogin ? cannotGo : canGo;
+
       return this.http.get(url).toPromise()
-             .then(response => {
-                 console.log(response.json());
-                 return true;
-             })
-             .catch(error => {
-                 console.error('An error occurred', error);
-                 return false;
-             });
+             .then(f1).catch(f2);
   }
 
 }

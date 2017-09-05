@@ -15,13 +15,31 @@ export class UserService {
         return this.http.post('http://localhost:3000/api/users/new', user, options)
                .toPromise()
                .then(response => {
-                   let posts = response.json();
-                //    posts.forEach(post=>{
-                //        delete post.__v;
-                //        delete post._id;
-                //    });
-                   return posts;
+                   return response.json();
                })
+               .catch(this.handleError);
+    }
+
+    getUsers(): Promise<any> {
+        let options = new RequestOptions({ headers: this.headers});
+
+        return this.http.get('http://localhost:3000/api/users', options)
+               .toPromise()
+               .then(response => {
+                   return response.json().map((user)=>{
+                       user.avatarUrl = user.avatarUrl || '../assets/sample-avatar.png';
+                       return user;
+                   });
+               })
+               .catch(this.handleError);
+    }
+
+    deleteUser(userId): Promise<any> {
+        let options = new RequestOptions({ headers: this.headers});
+
+        return this.http.delete('http://localhost:3000/api/users/'+userId, options)
+               .toPromise()
+               .then(response => response)
                .catch(this.handleError);
     }
 

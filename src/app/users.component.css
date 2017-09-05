@@ -1,3 +1,7 @@
 .example-full-width {
     width: 100%;
 }
+
+.example-card{
+    margin-bottom: 15px;
+}

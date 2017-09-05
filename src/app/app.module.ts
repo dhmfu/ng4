@@ -4,8 +4,10 @@ import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';  // <-- #1 import module
+import {HttpClientModule} from '@angular/common/http';
 
-import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule} from '@angular/material';
+
+import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -36,10 +38,12 @@ import { UserService } from './users.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [LoggedIn]
       },
       {
         path: 'posts',
@@ -47,7 +51,8 @@ import { UserService } from './users.service';
       },
       {
         path: 'users',
-        component: UsersComponent
+        component: UsersComponent,
+        canActivate: [LoggedIn]
       },
       {
         path: '',
@@ -65,7 +70,8 @@ import { UserService } from './users.service';
     MdSidenavModule,
     MdInputModule,
     MdCheckboxModule,
-    MdDialogModule
+    MdDialogModule,
+    MdProgressBarModule
   ],
   providers: [PostService, LoginService, LoggedIn, UserService],
   bootstrap: [AppComponent],

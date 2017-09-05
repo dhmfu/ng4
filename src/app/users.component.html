@@ -1,13 +1,13 @@
-<h1>Hello</h1>
+<h1>Create new user</h1>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
     <md-card>
         <md-card-content>
             <md-input-container class="example-full-width">
-                <input formControlName="username" required maxlength="60" #username mdInput placeholder="username" type="name">
+                <input formControlName="username" required maxlength="60" #username mdInput placeholder="username" type="text">
                 <md-hint align="end">{{username.value.length}} / 60</md-hint>
             </md-input-container>
             <md-input-container class="example-full-width">
-                <input formControlName="password" required #password mdInput placeholder="password" type="password">
+                <input formControlName="password" required #password mdInput placeholder="password" type="text">
             </md-input-container>
             <md-checkbox class="example-margin" formControlName="superAdmin">Super-Admin</md-checkbox>
         </md-card-content>
@@ -18,3 +18,23 @@
         </md-card-actions>
     </md-card>
 </form>
+<spinner *ngIf="loading; else elseBlock"></spinner>
+<ng-template #elseBlock>
+    <div>
+        <h1>Users</h1>
+        <md-card *ngFor="let user of users" class="example-card">
+            <md-card-header>
+                <img src="{{user.avatarUrl}}" md-card-avatar/>
+                <!-- <md-card-title>{{post.creator}}</md-card-title> -->
+                <!-- <md-card-subtitle>{{post.createdAt | date}}</md-card-subtitle> -->
+            </md-card-header>
+            <md-card-content>
+                <p [innerHtml]="user.username"></p>
+                <p>{{user.superAdmin}}</p>
+            </md-card-content>
+            <md-card-actions>
+                <button md-button (click)="delete(user)">DELETE</button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</ng-template>

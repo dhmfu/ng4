@@ -3,15 +3,19 @@
         <md-card-content>
             <md-input-container class="example-full-width">
                 <textarea name="postText" id="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
-                required maxlength="1000" #address mdInput placeholder="Create a new post">
+                required maxlength="1000" #post mdInput placeholder="Create a new post">
                 </textarea>
-                <md-hint align="end">{{address.value.length}} / 1000</md-hint>
+                <md-hint align="end">{{post.value.length}} / 1000</md-hint>
             </md-input-container>
+            <input type="file" (change)="imageUpload($event)" formControlName="postImage">
         </md-card-content>
         <md-card-actions>
             <div class="submit">
                 <button type="submit" md-button>Post</button>
             </div>
         </md-card-actions>
+        <md-card-footer *ngIf="loading">
+            <md-progress-bar mode="determinate" [value]="progress"></md-progress-bar>
+        </md-card-footer>
     </md-card>
 </form>

@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
+import { HttpRequest, HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Post } from './post';
 @Injectable()
 export class PostService {
-    constructor(private http: Http) { }
+    constructor(private http: Http, private httpClient: HttpClient) { }
 
     private headers = new Headers({'Content-Type': 'text/plain', 'x-access-token': localStorage.getItem('token')});
 
     getPosts(): Promise<Post[]> {
+        let options = new RequestOptions({ headers: this.headers});
+
         return this.http.get('http://localhost:3000/api/posts')
                .toPromise()
                .then(response => {
@@ -35,6 +38,35 @@ export class PostService {
                .then(response => this.preparePost(response.json()) as Post)
                .catch(this.handleError);
     }
+
+    sendFile(file, callback): Promise<any> {
+        return new Promise((resolve, reject)=>{
+            let xhr = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append('file', file);
+
+            // обработчики можно объединить в один,
+            // если status == 200, то это успех, иначе ошибка
+            xhr.onload = xhr.onerror = () => {
+              if (xhr.status == 200) {
+                resolve("success");
+              } else {
+                reject("error " + xhr.status);
+              }
+            };
+
+            // обработчик для закачки
+            xhr.upload.onprogress = function(event) {
+                callback(Math.round((event.loaded/event.total)*100));
+            }
+
+            xhr.open("POST", "http://localhost:3000/api/posts/test", true);
+            // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+            xhr.send(formData);
+        });
+    }
+
+
 
     deletePost(postId, user): Promise<any> {
         this.headers.append('x-user-username', user.username);
