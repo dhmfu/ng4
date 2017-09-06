@@ -2,7 +2,7 @@
 <spinner *ngIf="loading; else elseBlock"></spinner>
 <ng-template #elseBlock>
     <div>
-        <h1>News</h1>
+        <h1>Posts</h1>
         <md-card *ngFor="let post of posts" class="example-card">
             <md-card-header>
                 <img src="{{post.avatarUrl}}" md-card-avatar/>
@@ -10,12 +10,16 @@
                 <md-card-subtitle>{{post.createdAt | date}}</md-card-subtitle>
             </md-card-header>
             <md-card-content>
+                <h3>{{post.title}}</h3>
                 <p [innerHtml]="post.description"></p>
             </md-card-content>
             <md-card-actions *ngIf="user.id">
                 <button md-button (click)="delete(post)" *ngIf="hasRights(post)">DELETE</button>
                 <button md-button (click)="edit(post)" *ngIf="hasRights(post)">EDIT</button>
             </md-card-actions>
+            <div class="image-container">
+                <img md-card-lg-image src="../assets/sample-avatar.png" [alt]="post.title">
+            </div>
         </md-card>
     </div>
 </ng-template>

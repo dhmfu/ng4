@@ -26,7 +26,8 @@ export class NewPostComponent implements OnInit{
 
     createForm() {
         this.postForm = this.fb.group({
-            postText:  ['', [Validators.required, Validators.maxLength(1000)]],
+            postTitle: ['', [Validators.required, Validators.maxLength(1000)]],
+            postText:  ['', [Validators.required, Validators.maxLength(10000)]],
             postImage: ['']
         });
     }
@@ -48,14 +49,15 @@ export class NewPostComponent implements OnInit{
         let form = this.postForm;
         if(!form.valid) return;
         this.loading = true;
-        this.postService.sendPost(form.get('postText').value).then( (res: Post) => {
+        let changeProgressBar = (data) => this.progress = data;
+        this.postService.sendPost(form.get('postText').value, form.get('postTitle').value, this.file, changeProgressBar)
+        .then( (res: any) => {
             document.getElementById('postText').style.height = this.postSize + 'px';
-            this.onSend.emit(res);
+            this.loading = false;
             form.reset();
-            this.postService.sendFile(this.file, (data)=>{
-                this.progress = data;
-            }).then(response=>console.log(response)).catch(error=>console.error(error));
-            // setTimeout(()=>this.loading = false,5000);
+            if(!res.errors)
+                this.onSend.emit(res);
+            else alert('Sorry, try later');
         });
     }
 

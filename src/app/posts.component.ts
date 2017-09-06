@@ -20,11 +20,9 @@ export class PostsComponent implements OnInit{
     user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
 
     ngOnInit(): void {
-        this.postService.getPosts().then(res => {
+        this.postService.getPosts().then((res: Post[]) => {
             this.loading = false;
             this.posts = res;
-            // this.allPosts = res;
-            // this.posts = this.allPosts.slice(0,5);
         })
         .catch(err=>{
             // this.loading = false;
@@ -93,7 +91,7 @@ export class PostEditDialog implements OnInit{
   post: Post;
 
   ngOnInit(): void {
-      let textarea = document.getElementById('postText');
+      let textarea = document.getElementById('editPostText');
       textarea.addEventListener('focus', (event: Event) => {
           textarea.style.height = textarea.scrollHeight + 'px';
       });

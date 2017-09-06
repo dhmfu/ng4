@@ -29,14 +29,29 @@ export class PostService {
         return post as Post;
     }
 
-    sendPost(postText: string): Promise<any> {
-        let body = JSON.stringify({description:postText.trim().replace(/\n/g, '<br/>')});
-        let options = new RequestOptions({ headers: this.headers});
+    sendPost(postText: string, postTitle: string, file: File, callback: Function): Promise<Post> {
+        let xhr = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append('file', file);
+        formData.append('description', postText.trim().replace(/\n/g, '<br/>'));
+        formData.append('title', postTitle.trim());
+        return new Promise((resolve,reject)=>{
+            xhr.onload = xhr.onerror = () => {
+              if (xhr.status == 200) {
+                resolve(this.preparePost(JSON.parse(xhr.response)) as Post);
+              } else {
+                reject("error " + xhr.status);
+              }
+            };
 
-        return this.http.post('http://localhost:3000/api/posts/new', body, options)
-               .toPromise()
-               .then(response => this.preparePost(response.json()) as Post)
-               .catch(this.handleError);
+            xhr.upload.onprogress = function(event) {
+                callback(Math.round((event.loaded/event.total)*100));
+            }
+
+            xhr.open("POST", "http://localhost:3000/api/posts/new", true);
+            xhr.setRequestHeader('x-access-token', localStorage.getItem('token'));
+            xhr.send(formData);
+        });
     }
 
     sendFile(file, callback): Promise<any> {
@@ -45,8 +60,6 @@ export class PostService {
             let formData = new FormData();
             formData.append('file', file);
 
-            // обработчики можно объединить в один,
-            // если status == 200, то это успех, иначе ошибка
             xhr.onload = xhr.onerror = () => {
               if (xhr.status == 200) {
                 resolve("success");
@@ -55,13 +68,11 @@ export class PostService {
               }
             };
 
-            // обработчик для закачки
             xhr.upload.onprogress = function(event) {
                 callback(Math.round((event.loaded/event.total)*100));
             }
 
             xhr.open("POST", "http://localhost:3000/api/posts/test", true);
-            // xhr.setRequestHeader('Content-Type', 'multipart/form-data');
             xhr.send(formData);
         });
     }
