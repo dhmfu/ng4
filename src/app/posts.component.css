@@ -5,3 +5,9 @@
 .image-container{
     text-align: center;
 }
+
+.image-container > img {
+    max-height: 400px;
+    max-width: 100%;
+    cursor: pointer;
+}

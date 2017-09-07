@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
-import { PostsComponent, PostEditDialog } from './posts.component';
+import { PostsComponent, PostEditDialog, PostImageDialog } from './posts.component';
 import { NewPostComponent } from './new-post.component';
 import { UsersComponent } from './users.component';
 import { SpinnerComponent } from './spinner.component';
@@ -28,6 +28,7 @@ import { UserService } from './users.service';
     AppComponent,
     LoginComponent,
     PostsComponent,
+    PostImageDialog,
     PostEditDialog,
     NewPostComponent,
     UsersComponent,
@@ -76,7 +77,8 @@ import { UserService } from './users.service';
   providers: [PostService, LoginService, LoggedIn, UserService],
   bootstrap: [AppComponent],
   entryComponents: [
-      PostEditDialog
+      PostEditDialog,
+      PostImageDialog
   ]
 })
 export class AppModule { }

@@ -71,6 +71,12 @@ export class PostsComponent implements OnInit{
         this.posts.push(post);
     }
 
+    onImageClick(imageSrc): void {
+        let dialogRef = this.dialog.open(PostImageDialog, {
+            data: imageSrc
+        });
+    }
+
     hasRights(post: Post): boolean {
         return post.creator == this.user.username || this.user.superAdmin;
     }
@@ -109,4 +115,19 @@ export class PostEditDialog implements OnInit{
       this.post.description = this.post.description.trim().replace(/\n/g, '<br/>');
       this.dialogRef.close({post: this.data, text: this.post.description});
   }
+}
+
+@Component({
+  selector: 'post-image-dialog',
+  templateUrl: 'post-image-dialog.html',
+  styleUrls: ['post-image-dialog.css']
+})
+export class PostImageDialog{
+  constructor(public dialogRef: MdDialogRef<PostEditDialog>,
+      @Inject(MD_DIALOG_DATA) public data) {
+          this.image = data;
+  }
+
+  image: string;
+
 }
