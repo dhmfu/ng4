@@ -22,13 +22,13 @@ export class NewPostComponent implements OnInit{
     postSize: number;
     loading: boolean = false;
     file;
+    fileInput;
     progress: number;
 
     createForm() {
         this.postForm = this.fb.group({
             postTitle: ['', [Validators.required, Validators.maxLength(1000)]],
-            postText:  ['', [Validators.required, Validators.maxLength(10000)]],
-            postImage: ['']
+            postText:  ['', [Validators.required, Validators.maxLength(10000)]]
         });
     }
 
@@ -41,8 +41,9 @@ export class NewPostComponent implements OnInit{
         element.style.height = element.scrollHeight + 'px';
     }
 
-    imageUpload(event): void {
-        this.file = event.target.files[0];
+    imageUpload(target): void {
+        this.fileInput = target
+        this.file = this.fileInput.files[0];
     }
 
     onSubmit(): void {
@@ -54,11 +55,15 @@ export class NewPostComponent implements OnInit{
         .then( (res: any) => {
             document.getElementById('postText').style.height = this.postSize + 'px';
             this.loading = false;
+            if(this.file && this.fileInput) {
+                this.file = null;
+                this.fileInput.value = '';
+            }
             form.reset();
             if(!res.errors)
                 this.onSend.emit(res);
             else alert('Sorry, try later');
-        });
+        }).catch(error=>console.log(error));
     }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
-import { HttpRequest, HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpRequest, HttpClient, HttpEventType, HttpResponse, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Post } from './post';
@@ -29,52 +29,28 @@ export class PostService {
         return post as Post;
     }
 
-    sendPost(postText: string, postTitle: string, file: File, callback: Function): Promise<Post> {
-        let xhr = new XMLHttpRequest();
+    sendPost(postText: string, postTitle: string, file: File, callback: Function): Promise<any> {
         let formData = new FormData();
         formData.append('file', file);
         formData.append('description', postText.trim().replace(/\n/g, '<br/>'));
         formData.append('title', postTitle.trim());
-        return new Promise((resolve,reject)=>{
-            xhr.onload = xhr.onerror = () => {
-              if (xhr.status == 200) {
-                resolve(this.preparePost(JSON.parse(xhr.response)) as Post);
-              } else {
-                reject("error " + xhr.status);
-              }
-            };
+        let headers = new HttpHeaders({'x-access-token': localStorage.getItem('token')});
 
-            xhr.upload.onprogress = function(event) {
-                callback(Math.round((event.loaded/event.total)*100));
-            }
-
-            xhr.open("POST", "http://localhost:3000/api/posts/new", true);
-            xhr.setRequestHeader('x-access-token', localStorage.getItem('token'));
-            xhr.send(formData);
+        let request = new HttpRequest('POST', 'http://localhost:3000/api/posts/new', formData, {
+            reportProgress: true,
+            headers
         });
-    }
 
-    sendFile(file, callback): Promise<any> {
         return new Promise((resolve, reject)=>{
-            let xhr = new XMLHttpRequest();
-            let formData = new FormData();
-            formData.append('file', file);
-
-            xhr.onload = xhr.onerror = () => {
-              if (xhr.status == 200) {
-                resolve("success");
-              } else {
-                reject("error " + xhr.status);
-              }
-            };
-
-            xhr.upload.onprogress = function(event) {
-                callback(Math.round((event.loaded/event.total)*100));
-            }
-
-            xhr.open("POST", "http://localhost:3000/api/posts/test", true);
-            xhr.send(formData);
+            this.httpClient.request(request).subscribe(event => {
+                if (event.type === HttpEventType.UploadProgress)
+                    callback(Math.round(100 * (event.loaded / event.total)));
+                else if (event instanceof HttpResponse && event.ok)
+                    resolve(this.preparePost(event.body));
+                else if (event instanceof HttpResponse && !event.ok) reject('asdad');
+            });
         });
+
     }
 
 

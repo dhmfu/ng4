@@ -23,6 +23,9 @@ export class PostsComponent implements OnInit{
         this.postService.getPosts().then((res: Post[]) => {
             this.loading = false;
             this.posts = res;
+            this.posts.sort((post1, post2)=> {
+                return Date.parse(post2.createdAt) - Date.parse(post1.createdAt);
+            });
         })
         .catch(err=>{
             // this.loading = false;
@@ -68,7 +71,7 @@ export class PostsComponent implements OnInit{
     }
 
     onNewPost(post: Post): void {
-        this.posts.push(post);
+        this.posts.unshift(post);
     }
 
     zoomImage(imageSrc): void {

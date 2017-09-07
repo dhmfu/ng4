@@ -13,7 +13,10 @@
                 </textarea>
                 <md-hint align="end">{{postText.value.length}} / 10000</md-hint>
             </md-input-container>
-            <input type="file" (change)="imageUpload($event)" formControlName="postImage">
+            <input type="file" id="fileInput" accept="image/*" (change)="imageUpload($event.target)">
+            <!-- <button aria-label="Attach image" md-icon-button (click)="postText.click()">
+                <md-icon aria-hidden="true">attach_file</md-icon>
+            </button> -->
         </md-card-content>
         <md-card-actions>
             <div class="submit">

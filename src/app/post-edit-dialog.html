@@ -1,10 +1,10 @@
 <h1 md-dialog-title>Fancy Editor</h1>
 <div md-dialog-content>
     <md-input-container class="example-full-width">
-        <textarea id="editPostText" required maxlength="1000" #editPost (keyup)="resizeInput($event.target)"
+        <textarea id="editPostText" required maxlength="10000" #editPost (keyup)="resizeInput($event.target)"
         mdInput placeholder="Type your thoughts here" [(ngModel)]="post.description">
         </textarea>
-        <md-hint align="end">{{editPost.value.length}} / 1000</md-hint>
+        <md-hint align="end">{{editPost.value.length}} / 10000</md-hint>
     </md-input-container>
 </div>
 <div md-dialog-actions>

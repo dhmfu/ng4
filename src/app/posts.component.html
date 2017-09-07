@@ -18,7 +18,7 @@
                 <button md-button (click)="edit(post)" *ngIf="hasRights(post)">EDIT</button>
             </md-card-actions>
             <div class="image-container">
-                <img (error)="onError($event.target)" src="{{'http://localhost:3000/'+post.title + '.jpeg'}}" (click)="zoomImage($event.target.src)" [alt]="post.title">
+                <img (error)="onError($event.target)" src="{{'http://localhost:3000/'+post._id + '.jpeg'}}" (click)="zoomImage($event.target.src)" [alt]="post.title">
             </div>
         </md-card>
     </div>
