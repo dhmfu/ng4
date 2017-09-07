@@ -71,11 +71,16 @@ export class PostsComponent implements OnInit{
         this.posts.push(post);
     }
 
-    onImageClick(imageSrc): void {
+    zoomImage(imageSrc): void {
         let dialogRef = this.dialog.open(PostImageDialog, {
             data: imageSrc
         });
     }
+
+    onError(target): void {
+        target.parentElement.remove();
+    }
+
 
     hasRights(post: Post): boolean {
         return post.creator == this.user.username || this.user.superAdmin;
