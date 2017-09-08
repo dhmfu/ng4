@@ -42,7 +42,7 @@ export class NewPostComponent implements OnInit{
     }
 
     imageUpload(target): void {
-        this.fileInput = target
+        this.fileInput = target;
         this.file = this.fileInput.files[0];
     }
 

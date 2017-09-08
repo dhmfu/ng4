@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';  // <-- #1 import module
+import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 
 import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule} from '@angular/material';
+import {GoTopButtonModule} from 'ng2-go-top-button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -62,6 +63,7 @@ import { UserService } from './users.service';
       },
     ]),
     BrowserAnimationsModule,
+    GoTopButtonModule,
     MdListModule,
     MdToolbarModule,
     MdIconModule,

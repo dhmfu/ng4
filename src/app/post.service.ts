@@ -47,7 +47,7 @@ export class PostService {
                     callback(Math.round(100 * (event.loaded / event.total)));
                 else if (event instanceof HttpResponse && event.ok)
                     resolve(this.preparePost(event.body));
-                else if (event instanceof HttpResponse && !event.ok) reject('asdad');
+                else if (event instanceof HttpResponse && !event.ok) reject(event.status);
             });
         });
 
