@@ -27,10 +27,13 @@
     </md-sidenav>
     <md-toolbar color="primary">
         <button aria-label="Open menu" md-icon-button (click)="sidenav.toggle()">
-            <md-icon>menu</md-icon>
+            <md-icon aria-hidden="true">menu</md-icon>
         </button>
     </md-toolbar>
     <div class="content">
       <router-outlet></router-outlet>
     </div>
 </md-sidenav-container>
+<button class="up-button" *ngIf="showButton" (click)="scrollTo()">
+    <md-icon aria-hidden="true">arrow_upward</md-icon>
+</button>

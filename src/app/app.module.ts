@@ -8,7 +8,6 @@ import {HttpClientModule} from '@angular/common/http';
 
 
 import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule} from '@angular/material';
-import {GoTopButtonModule} from 'ng2-go-top-button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
@@ -63,7 +62,6 @@ import { UserService } from './users.service';
       },
     ]),
     BrowserAnimationsModule,
-    GoTopButtonModule,
     MdListModule,
     MdToolbarModule,
     MdIconModule,

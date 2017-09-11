@@ -13,6 +13,7 @@ export class AppComponent implements OnInit{
     constructor(private loginService: LoginService, private router: Router){}
 
     user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
+    showButton = false;
 
     ngOnInit(): void {
         this.router.events.subscribe((event) => {
@@ -21,6 +22,19 @@ export class AppComponent implements OnInit{
                 //keep user up-to-date everytime route changes
             }
         });
+
+        document.querySelector('.mat-sidenav-content').addEventListener('scroll', (event: any)=> {
+            let pseudoWindow: Element = event.target;
+            let scrolled = (pseudoWindow.scrollTop/pseudoWindow.scrollHeight)*100;
+            if (scrolled>=17)
+                this.showButton = true;
+            else this.showButton = false;
+        });
+
+    }
+
+    scrollTo(): void {
+        document.querySelector('.mat-sidenav-content').scrollTop = 0;
     }
 
     logout(): void {
@@ -28,12 +42,5 @@ export class AppComponent implements OnInit{
         localStorage.removeItem('user');
         this.user = {username: 'Guest'};
         this.router.navigate(['login']);
-        // this.loginService.logout().then(response => {
-        //     console.log(response);
-        //     this.user = {username: 'Guest'};
-        //     this.router.navigate(['posts']).then(()=>{
-        //         window.location.reload();
-        //     });
-        // });
     }
 }

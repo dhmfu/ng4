@@ -32,7 +32,7 @@ export class PostsComponent implements OnInit{
             //TODO: display error message
             console.log(err);
         });
-        document.body.onscroll = (event) => console.log('hjk,mnhuikmnbhyuiol');
+        window.onscroll = (event) => console.log('hjk,mnhuikmnbhyuiol');
     }
 
     delete(post: Post): void {
