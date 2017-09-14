@@ -4,12 +4,10 @@ import { HttpModule }    from '@angular/http';
 import { RouterModule }   from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
-
-import {MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
@@ -22,6 +20,7 @@ import { PostService } from './post.service';
 import { LoginService, LoggedIn } from './login.service';
 import { UserService } from './users.service';
 
+import { AppRoutingModule }     from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -40,27 +39,7 @@ import { UserService } from './users.service';
     ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [LoggedIn]
-      },
-      {
-        path: 'posts',
-        component: PostsComponent
-      },
-      {
-        path: 'users',
-        component: UsersComponent,
-        canActivate: [LoggedIn]
-      },
-      {
-        path: '',
-        redirectTo: '/posts',
-        pathMatch: 'full'
-      },
-    ]),
+    AppRoutingModule,
     BrowserAnimationsModule,
     MdListModule,
     MdToolbarModule,
@@ -74,7 +53,7 @@ import { UserService } from './users.service';
     MdDialogModule,
     MdProgressBarModule
   ],
-  providers: [PostService, LoginService, LoggedIn, UserService],
+  providers: [PostService],
   bootstrap: [AppComponent],
   entryComponents: [
       PostEditDialog,

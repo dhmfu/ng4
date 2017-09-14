@@ -7,7 +7,7 @@
             <md-card-header>
                 <img src="{{post.avatarUrl}}" md-card-avatar/>
                 <md-card-title>{{post.creator}}</md-card-title>
-                <md-card-subtitle>{{post.createdAt | date}}</md-card-subtitle>
+                <md-card-subtitle>{{post.createdAt | date:"MMMM, d 'at' H:mm"}}</md-card-subtitle>
             </md-card-header>
             <md-card-content>
                 <h3>{{post.title}}</h3>

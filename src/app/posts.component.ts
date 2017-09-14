@@ -8,8 +8,7 @@ import { PostService } from './post.service';
 @Component({
   selector: 'all-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css'],
-  providers: [PostService]
+  styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit{
     constructor(private postService: PostService, private router: Router, public dialog: MdDialog) { }

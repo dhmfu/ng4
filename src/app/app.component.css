@@ -60,13 +60,18 @@
     bottom: 45px;
     left: 45px;
     background: transparent;
-    border: 2px solid rgba(0, 0, 0, 0.870588);
-    color: rgba(0, 0, 0, 0.870588);
+    border: 2px solid rgba(0, 0, 0, 0.6523);
+    color: rgba(0, 0, 0, 0.6523);
     width: 50px;
     height: 50px;
     padding: 0;
     border-radius: 25px;
     cursor: pointer;
+}
+
+.up-button:hover {
+    border: 2px solid rgba(0, 0, 0, 0.870588);
+    color: rgba(0, 0, 0, 0.870588)
 }
 
 .mat-sidenav-content {
