@@ -1,0 +1,8 @@
+<table>
+  <tr>
+    <th *ngFor="let key of keys">{{key}}</th>
+  </tr>
+  <tr *ngFor="let song of songs">
+    <td *ngFor="let key of keys">{{song[key]}}</td>
+  </tr>
+</table>

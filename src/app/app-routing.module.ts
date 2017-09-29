@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { PostsComponent} from './posts.component';
 import { UsersComponent } from './users.component';
+import { SongsComponent } from './songs.component';
 
 import { LoggedIn } from './login.service';
 
@@ -21,6 +22,10 @@ const routes: Routes = [
       path: 'users',
       component: UsersComponent,
       canActivate: [LoggedIn]
+    },
+    {
+      path: 'songs',
+      component: SongsComponent
     },
     {
       path: '',

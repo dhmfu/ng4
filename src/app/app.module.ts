@@ -6,7 +6,7 @@ import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule } from '@angular/material';
+import { MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule, MdTableModule, MdSortModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -15,10 +15,12 @@ import { PostsComponent, PostEditDialog, PostImageDialog } from './posts.compone
 import { NewPostComponent } from './new-post.component';
 import { UsersComponent } from './users.component';
 import { SpinnerComponent } from './spinner.component';
+import { SongsComponent } from './songs.component';
 
 import { PostService } from './post.service';
 import { LoginService, LoggedIn } from './login.service';
 import { UserService } from './users.service';
+import { SongService } from './song.service';
 
 import { AppRoutingModule }     from './app-routing.module';
 
@@ -31,6 +33,7 @@ import { AppRoutingModule }     from './app-routing.module';
     PostEditDialog,
     NewPostComponent,
     UsersComponent,
+    SongsComponent,
     SpinnerComponent
   ],
   imports: [
@@ -51,7 +54,9 @@ import { AppRoutingModule }     from './app-routing.module';
     MdInputModule,
     MdCheckboxModule,
     MdDialogModule,
-    MdProgressBarModule
+    MdProgressBarModule,
+    MdTableModule,
+    MdSortModule
   ],
   providers: [PostService],
   bootstrap: [AppComponent],
