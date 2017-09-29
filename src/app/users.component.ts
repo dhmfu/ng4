@@ -52,7 +52,7 @@ export class UsersComponent implements OnInit{
 
     delete(user): void {
         if(confirm('Sure?'))
-            this.userService.deleteUser(user.id).then(res=>{
+            this.userService.deleteUser(user._id).then(res=>{
                 this.users.splice(this.users.indexOf(user),1);
             }).catch(err=>console.log(err));
     }
