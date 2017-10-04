@@ -1,4 +1,5 @@
-<table>
+<spinner *ngIf="loading"></spinner>
+<table *ngIf="!loading">
   <tr>
     <th *ngFor="let key of keys">{{key}}</th>
   </tr>
