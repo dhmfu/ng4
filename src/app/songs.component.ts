@@ -12,7 +12,7 @@ export class SongsComponent implements OnInit{
     constructor(private songService: SongService) { }
     loading = true;
     songs: Array<any>;
-    keys = ['artist', 'title', 'album', 'trackNumber', 'year', 'genre'];
+    keys = ['artist', 'title', 'album', 'track', 'year', 'genre'];
 
     ngOnInit(): void {
         this.songService.getPosts().then((res)=>{
