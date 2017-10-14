@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
             }
         });
 
-        document.querySelector('.mat-sidenav-content').addEventListener('scroll', (event: any)=> {
+        document.querySelector('.mat-drawer-content').addEventListener('scroll', (event: any)=> {
             let pseudoWindow: Element = event.target;
             let scrolled = (pseudoWindow.scrollTop/pseudoWindow.scrollHeight)*100;
             if (scrolled>=17)
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit{
     }
 
     scrollTo(): void {
-        document.querySelector('.mat-sidenav-content').scrollTop = 0;
+        document.querySelector('.mat-drawer-content').scrollTop = 0;
     }
 
     logout(): void {

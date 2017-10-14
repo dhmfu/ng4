@@ -17,7 +17,7 @@ export class PostService {
                .toPromise()
                .then(response => {
                    let posts: Array<any> = response.json();
-                   posts.map(this.preparePost);
+                   posts = posts.map(this.preparePost);
                    return posts as Post[];
                })
                .catch(this.handleError);

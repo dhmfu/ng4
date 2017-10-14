@@ -3,7 +3,9 @@
   <tr>
     <th *ngFor="let key of keys">{{key}}</th>
   </tr>
-  <tr *ngFor="let song of songs">
-    <td *ngFor="let key of keys">{{song[key]}}</td>
+  <tr *ngFor="let song of songsTemp">
+    <td *ngFor="let key of keys"><input type="text" [(ngModel)]="song[key]"></td>
   </tr>
 </table>
+
+<button type="button" (click)="synchronize()">Synchronize</button>
