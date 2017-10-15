@@ -7,7 +7,7 @@ import { Song } from './song';
 @Component({
   selector: 'all-songs',
   templateUrl: './songs.component.html',
-  styleUrls: ['./songs.component.css'],
+  styleUrls: ['./songs.component.scss'],
   providers: [SongService]
 })
 export class SongsComponent implements OnInit{
@@ -21,16 +21,35 @@ export class SongsComponent implements OnInit{
         this.songService.getSongs().then((res: Song[])=>{
             this.songs = res;
             this.songs.sort((a, b) => a.artist.localeCompare(b.artist));
-            this.songsTemp = this.songs.slice(0);
+            this.songsTemp = [];
+            this.songs.forEach(song => {
+                this.songsTemp.push(new Song(song));
+            });
             this.loading = false;
-        }).catch((err)=>console.log(err));
+        }).catch((err) => console.log(err));
     }
 
     synchronize(): void {
         this.loading = true;
         this.songService.syncSongs(this.songsTemp).then(res=> {
+            this.songs = [];
+            this.songsTemp.forEach(song => {
+                this.songs.push(new Song(song));
+            });
             this.songs = this.songsTemp.slice(0);
-            this.loading=false;
+            this.loading = false;
+        });
+    }
+
+    markAsChanged(element: Element): void {
+        element.parentElement.parentElement.classList.add('changed');
+    }
+
+    reset(): void {
+        document.querySelector('.changed').classList.remove('changed');
+        this.songsTemp = [];
+        this.songs.forEach(song => {
+            this.songsTemp.push(new Song(song));
         });
     }
 }

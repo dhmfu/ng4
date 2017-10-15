@@ -1,11 +1,14 @@
 <spinner *ngIf="loading"></spinner>
 <table *ngIf="!loading">
   <tr>
-    <th *ngFor="let key of keys">{{key}}</th>
+    <th *ngFor="let key of keys">{{ key | uppercase }}</th>
   </tr>
   <tr *ngFor="let song of songsTemp">
-    <td *ngFor="let key of keys"><input type="text" [(ngModel)]="song[key]"></td>
+    <td *ngFor="let key of keys">
+        <textarea [(ngModel)]="song[key]" (keyup)="markAsChanged($event.target)">
+        </textarea>
+    </td>
   </tr>
+  <button md-raised-button type="button" (click)="synchronize()">Synchronize</button>
+  <button md-raised-button type="button" (click)="reset()">Reset</button>
 </table>
-
-<button type="button" (click)="synchronize()">Synchronize</button>

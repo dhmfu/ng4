@@ -1,0 +1,25 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+
+    tr.changed {
+        background: #ddd;
+    }
+
+    td, th {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+
+        textarea {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid black;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 10px 10px 10px 0;
+            resize: none;
+        }
+    }
+}
