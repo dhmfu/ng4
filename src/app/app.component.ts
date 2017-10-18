@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,11 @@ export class AppComponent implements OnInit{
     user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
     showButton = false;
 
+    // drawer = '.mat-drawer-content';
+    drawer = '.mat-sidenav-content'
+
     ngOnInit(): void {
+        let socket = io('http://localhost:3000');
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 this.user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
@@ -20,7 +25,7 @@ export class AppComponent implements OnInit{
             }
         });
 
-        document.querySelector('.mat-drawer-content').addEventListener('scroll', (event: any)=> {
+        document.querySelector(this.drawer).addEventListener('scroll', (event: any)=> {
             let pseudoWindow: Element = event.target;
             let scrolled = (pseudoWindow.scrollTop/pseudoWindow.scrollHeight)*100;
             if (scrolled>=17)
@@ -31,7 +36,7 @@ export class AppComponent implements OnInit{
     }
 
     scrollTo(): void {
-        document.querySelector('.mat-drawer-content').scrollTop = 0;
+        document.querySelector(this.drawer).scrollTop = 0;
     }
 
     logout(): void {
