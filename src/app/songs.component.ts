@@ -15,7 +15,7 @@ export class SongsComponent implements OnInit{
     loading = true;
     songs: Song[];
     songsTemp: Song[];
-    keys = ['artist', 'title', 'album', 'track', 'year', 'genre'];
+    keys = ['artist', 'title', 'album', 'track', 'year', 'genre', 'filename'];
 
     ngOnInit(): void {
         this.songService.getSongs().then((res: Song[])=>{
@@ -31,7 +31,14 @@ export class SongsComponent implements OnInit{
 
     synchronize(): void {
         this.loading = true;
-        this.songService.syncSongs(this.songsTemp).then(res=> {
+        let songs = [];
+        for (let i = 0; i < document.querySelectorAll('.changed').length; i++) {
+            let song = this.songsTemp.find(song => song._id ==
+                document.querySelectorAll('.changed').item(i).classList[0]
+            );
+            songs.push(song);
+        }
+        this.songService.syncSongs(songs).then(res=> {
             this.songs = [];
             this.songsTemp.forEach(song => {
                 this.songs.push(new Song(song));

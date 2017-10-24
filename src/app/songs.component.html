@@ -3,7 +3,7 @@
   <tr>
     <th *ngFor="let key of keys">{{ key | uppercase }}</th>
   </tr>
-  <tr *ngFor="let song of songsTemp">
+  <tr *ngFor="let song of songsTemp" [ngClass]="song._id">
     <td *ngFor="let key of keys">
         <textarea [(ngModel)]="song[key]" (keyup)="markAsChanged($event.target)">
         </textarea>

@@ -3,21 +3,24 @@ interface SongInterface {
     album: string;
     title: string;
     track: string;
-    date: string;
+    year: string;
     genre: string;
     filename: string;
+    _id: string;
 };
 
-const KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre', 'filename'];
+const KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre', 'filename',
+'_id'];
 
 export class Song implements SongInterface{
     artist: string;
     album: string;
     title: string;
     track: string;
-    date: string;
+    year: string;
     genre: string;
     filename: string;
+    _id: string;
 
     constructor(song: SongInterface) {
         KEYS.forEach(key => {
