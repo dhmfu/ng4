@@ -18,6 +18,14 @@ export class AppComponent implements OnInit{
 
     ngOnInit(): void {
         let socket = io('http://localhost:3000');
+        socket.on('add song', (filename) => {
+            console.log(filename);
+        });
+
+        socket.on('delete song', (filename) => {
+            console.log(filename);
+        });
+
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 this.user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
