@@ -5,7 +5,8 @@
   </tr>
   <tr *ngFor="let song of songsTemp" [ngClass]="song._id">
     <td *ngFor="let key of keys">
-        <textarea [(ngModel)]="song[key]" (keyup)="markAsChanged($event.target)">
+        <textarea [(ngModel)]="song[key]" placeholder="unknown"
+        (keyup)="markAsChanged($event.target)">
         </textarea>
     </td>
   </tr>

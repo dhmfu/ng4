@@ -24,7 +24,7 @@ export class Song implements SongInterface{
 
     constructor(song: SongInterface) {
         KEYS.forEach(key => {
-            this[key] = song[key] || 'unknown';
+            this[key] = song[key] || '';
         });
     }
 }

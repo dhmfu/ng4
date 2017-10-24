@@ -30,7 +30,6 @@ export class SongsComponent implements OnInit{
     }
 
     synchronize(): void {
-        this.loading = true;
         let songs = [];
         for (let i = 0; i < document.querySelectorAll('.changed').length; i++) {
             let song = this.songsTemp.find(song => song._id ==
@@ -38,14 +37,16 @@ export class SongsComponent implements OnInit{
             );
             songs.push(song);
         }
-        this.songService.syncSongs(songs).then(res=> {
-            this.songs = [];
-            this.songsTemp.forEach(song => {
-                this.songs.push(new Song(song));
+        if(songs.length)
+            this.loading = true;
+            this.songService.syncSongs(songs).then(res=> {
+                this.songs = [];
+                this.songsTemp.forEach(song => {
+                    this.songs.push(new Song(song));
+                });
+                this.songs = this.songsTemp.slice(0);
+                this.loading = false;
             });
-            this.songs = this.songsTemp.slice(0);
-            this.loading = false;
-        });
     }
 
     markAsChanged(element: Element): void {
