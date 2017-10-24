@@ -15,7 +15,7 @@ export class SongsComponent implements OnInit{
     loading = true;
     songs: Song[];
     songsTemp: Song[];
-    keys = ['artist', 'title', 'album', 'track', 'year', 'genre', 'filename'];
+    KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
 
     ngOnInit(): void {
         this.songService.getSongs().then((res: Song[])=>{

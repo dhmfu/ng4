@@ -22,4 +22,10 @@ table {
             resize: none;
         }
     }
+
+    td > .lyrics {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 }
