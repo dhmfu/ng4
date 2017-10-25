@@ -27,7 +27,7 @@ export class PostsComponent implements OnInit{
             });
         })
         .catch(err=>{
-            // this.loading = false;
+            this.loading = false;
             //TODO: display error message
             console.log(err);
         });
@@ -130,7 +130,7 @@ export class PostEditDialog implements OnInit{
   styleUrls: ['post-image-dialog.css']
 })
 export class PostImageDialog{
-  constructor(public dialogRef: MatDialogRef<PostEditDialog>,
+  constructor(public dialogRef: MatDialogRef<PostImageDialog>,
       @Inject(MAT_DIALOG_DATA) public data) {
           this.image = data;
   }

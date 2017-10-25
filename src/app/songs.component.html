@@ -4,7 +4,7 @@
     <th *ngFor="let key of KEYS">{{ key | uppercase }}</th>
     <th>{{ 'Lyrics' | uppercase }}</th>
   </tr>
-  <tr *ngFor="let song of songsTemp" [ngClass]="song._id" [attr.title]="song.filename">
+  <tr *ngFor="let song of songsTemp" [ngClass]="song._id" class="song-row" [attr.title]="song.filename">
     <td *ngFor="let key of KEYS">
         <textarea [(ngModel)]="song[key]" placeholder="unknown"
         (keyup)="markAsChanged($event.target)">
@@ -12,7 +12,9 @@
     </td>
     <td>
         <div class="lyrics">
-            <button mat-icon-button type="button"><mat-icon>music_note</mat-icon></button>
+            <button mat-icon-button type="button" (click)="showLyrics($event.target, song)">
+                <mat-icon>music_note</mat-icon>
+            </button>
         </div>
     </td>
   </tr>

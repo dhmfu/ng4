@@ -1,0 +1,13 @@
+.mat-dialog-content{
+    display: flex;
+    justify-content: center;
+
+    .example-full-width {
+        width: 50%;
+
+        textarea.mat-input-element {
+            resize: none;
+            text-align: center;
+        }
+    }
+}

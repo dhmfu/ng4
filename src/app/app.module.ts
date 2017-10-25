@@ -15,7 +15,7 @@ import { PostsComponent, PostEditDialog, PostImageDialog } from './posts.compone
 import { NewPostComponent } from './new-post.component';
 import { UsersComponent } from './users.component';
 import { SpinnerComponent } from './spinner.component';
-import { SongsComponent } from './songs.component';
+import { SongsComponent, LyricsDialog } from './songs.component';
 
 import { PostService } from './post.service';
 import { LoginService, LoggedIn } from './login.service';
@@ -31,6 +31,7 @@ import { AppRoutingModule }     from './app-routing.module';
     PostsComponent,
     PostImageDialog,
     PostEditDialog,
+    LyricsDialog,
     NewPostComponent,
     UsersComponent,
     SongsComponent,
@@ -62,7 +63,8 @@ import { AppRoutingModule }     from './app-routing.module';
   bootstrap: [AppComponent],
   entryComponents: [
       PostEditDialog,
-      PostImageDialog
+      PostImageDialog,
+      LyricsDialog
   ]
 })
 export class AppModule { }
