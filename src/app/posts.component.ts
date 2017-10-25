@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import {MdDialog, MdDialogRef,MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Post } from './post';
 import { PostService } from './post.service';
@@ -11,7 +11,7 @@ import { PostService } from './post.service';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit{
-    constructor(private postService: PostService, private router: Router, public dialog: MdDialog) { }
+    constructor(private postService: PostService, private router: Router, public dialog: MatDialog) { }
 
     posts: Post[];
     allPosts: Post[];
@@ -31,7 +31,6 @@ export class PostsComponent implements OnInit{
             //TODO: display error message
             console.log(err);
         });
-        window.onscroll = (event) => console.log('hjk,mnhuikmnbhyuiol');
     }
 
     delete(post: Post): void {
@@ -96,8 +95,8 @@ export class PostsComponent implements OnInit{
   styleUrls: ['post-edit-dialog.css']
 })
 export class PostEditDialog implements OnInit{
-  constructor(public dialogRef: MdDialogRef<PostEditDialog>,
-      @Inject(MD_DIALOG_DATA) public data: Post) {
+  constructor(public dialogRef: MatDialogRef<PostEditDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: Post) {
           this.post = Object.assign({}, this.data);
           this.post.description = this.post.description.replace(/<br[/]>/g, '\n');
   }
@@ -131,8 +130,8 @@ export class PostEditDialog implements OnInit{
   styleUrls: ['post-image-dialog.css']
 })
 export class PostImageDialog{
-  constructor(public dialogRef: MdDialogRef<PostEditDialog>,
-      @Inject(MD_DIALOG_DATA) public data) {
+  constructor(public dialogRef: MatDialogRef<PostEditDialog>,
+      @Inject(MAT_DIALOG_DATA) public data) {
           this.image = data;
   }
 

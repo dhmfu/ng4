@@ -3,23 +3,23 @@
 <ng-template #elseBlock>
     <div>
         <h1>Posts</h1>
-        <md-card *ngFor="let post of posts" class="example-card">
-            <md-card-header>
-                <img src="{{post.avatarUrl}}" md-card-avatar/>
-                <md-card-title>{{post.creator}}</md-card-title>
-                <md-card-subtitle>{{post.createdAt | date:"MMMM, d 'at' H:mm"}}</md-card-subtitle>
-            </md-card-header>
-            <md-card-content>
+        <mat-card *ngFor="let post of posts" class="example-card">
+            <mat-card-header>
+                <img src="{{post.avatarUrl}}" mat-card-avatar/>
+                <mat-card-title>{{post.creator}}</mat-card-title>
+                <mat-card-subtitle>{{post.createdAt | date:"MMMM, d 'at' H:mm"}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
                 <h3>{{post.title}}</h3>
                 <p [innerHtml]="post.description"></p>
-            </md-card-content>
-            <md-card-actions *ngIf="user.id">
-                <button md-button (click)="delete(post)" *ngIf="hasRights(post)">DELETE</button>
-                <button md-button (click)="edit(post)" *ngIf="hasRights(post)">EDIT</button>
-            </md-card-actions>
+            </mat-card-content>
+            <mat-card-actions *ngIf="user.id">
+                <button mat-button (click)="delete(post)" *ngIf="hasRights(post)">DELETE</button>
+                <button mat-button (click)="edit(post)" *ngIf="hasRights(post)">EDIT</button>
+            </mat-card-actions>
             <div class="image-container">
                 <img (error)="onError($event.target)" src="{{'http://localhost:3000/'+post._id + '.jpeg'}}" (click)="zoomImage($event.target.src)" [alt]="post.title">
             </div>
-        </md-card>
+        </mat-card>
     </div>
 </ng-template>

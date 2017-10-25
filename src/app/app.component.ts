@@ -13,9 +13,6 @@ export class AppComponent implements OnInit{
     user = JSON.parse(localStorage.getItem('user')) || {username: 'Guest'};
     showButton = false;
 
-    // drawer = '.mat-drawer-content';
-    drawer = '.mat-sidenav-content'
-
     ngOnInit(): void {
         let socket = io('http://localhost:3000');
         socket.on('add song', (filename) => {
@@ -33,18 +30,22 @@ export class AppComponent implements OnInit{
             }
         });
 
-        document.querySelector(this.drawer).addEventListener('scroll', (event: any)=> {
-            let pseudoWindow: Element = event.target;
-            let scrolled = (pseudoWindow.scrollTop/pseudoWindow.scrollHeight)*100;
-            if (scrolled>=17)
-                this.showButton = true;
-            else this.showButton = false;
-        });
+        setTimeout(()=> {
+            document.querySelector('.mat-sidenav-content').addEventListener('scroll', (event: any)=> {
+                let pseudoWindow: Element = event.target;
+                let scrolled = (pseudoWindow.scrollTop/pseudoWindow.scrollHeight)*100;
+                console.log(scrolled);
+                if (scrolled>=17)
+                    this.showButton = true;
+                else this.showButton = false;
+            });
+        }, 500);
+
 
     }
 
     scrollTo(): void {
-        document.querySelector(this.drawer).scrollTop = 0;
+        document.querySelector('.mat-sidenav-content').scrollTop = 0;
     }
 
     logout(): void {

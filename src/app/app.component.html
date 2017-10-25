@@ -1,45 +1,45 @@
-<md-sidenav-container class="sidenav-container">
-    <md-sidenav #sidenav class="sidenav">
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav class="sidenav">
         <div class="header">
             <img src="../assets/sample-avatar.png" class="avatar" alt="">
             <span class="username">{{user.username}}</span>
             <div class="logout">
-                <button md-raised-button (click)="logout(); sidenav.toggle()" *ngIf="user.id; else elseBlock">LOGOUT</button>
+                <button mat-raised-button (click)="logout(); sidenav.toggle()" *ngIf="user.id; else elseBlock">LOGOUT</button>
                 <ng-template #elseBlock>
-                    <a md-raised-button (click)="sidenav.toggle()" routerLink="/login">LOGIN</a>
+                    <a mat-raised-button (click)="sidenav.toggle()" routerLink="/login">LOGIN</a>
                 </ng-template>
             </div>
         </div>
         <div class="body">
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/posts">
-                <md-icon>folder</md-icon>
+              <a mat-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/posts">
+                <mat-icon>folder</mat-icon>
                 <div class="path">Posts</div>
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/users" *ngIf="user.superAdmin">
-                <md-icon>person</md-icon>
+              <a mat-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/users" *ngIf="user.superAdmin">
+                <mat-icon>person</mat-icon>
                 <div class="path">Users</div>
               </a>
             </div>
             <div class="navigation">
-              <a md-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/songs">
-                <md-icon>library_music</md-icon>
+              <a mat-button (click)="sidenav.toggle()" routerLinkActive="active" routerLink="/songs">
+                <mat-icon>library_music</mat-icon>
                 <div class="path">Songs</div>
               </a>
             </div>
         </div>
-    </md-sidenav>
-    <md-toolbar color="primary">
-        <button aria-label="Open menu" md-icon-button (click)="sidenav.toggle()">
-            <md-icon aria-hidden="true">menu</md-icon>
+    </mat-sidenav>
+    <mat-toolbar color="primary">
+        <button aria-label="Open menu" mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon aria-hidden="true">menu</mat-icon>
         </button>
-    </md-toolbar>
+    </mat-toolbar>
     <div class="content">
       <router-outlet></router-outlet>
     </div>
-</md-sidenav-container>
+</mat-sidenav-container>
 <button class="up-button" *ngIf="showButton" (click)="scrollTo()">
-    <md-icon aria-hidden="true">arrow_upward</md-icon>
+    <mat-icon aria-hidden="true">arrow_upward</mat-icon>
 </button>

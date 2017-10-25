@@ -6,7 +6,7 @@ import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MdListModule, MdToolbarModule, MdIconModule, MdCardModule, MdButtonModule, MdProgressSpinnerModule, MdSidenavModule, MdInputModule, MdCheckboxModule, MdDialogModule, MdProgressBarModule, MdTableModule, MdSortModule } from '@angular/material';
+import { MatListModule, MatToolbarModule, MatIconModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatSidenavModule, MatInputModule, MatCheckboxModule, MatDialogModule, MatProgressBarModule, MatTableModule, MatSortModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -44,19 +44,19 @@ import { AppRoutingModule }     from './app-routing.module';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MdListModule,
-    MdToolbarModule,
-    MdIconModule,
-    MdCardModule,
-    MdButtonModule,
-    MdProgressSpinnerModule,
-    MdSidenavModule,
-    MdInputModule,
-    MdCheckboxModule,
-    MdDialogModule,
-    MdProgressBarModule,
-    MdTableModule,
-    MdSortModule
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [PostService],
   bootstrap: [AppComponent],

@@ -1,30 +1,30 @@
 <h1>Create new post</h1>
 <form [formGroup]="postForm" (ngSubmit)="onSubmit()" novalidate>
-    <md-card>
-        <md-card-content>
-            <md-input-container class="example-full-width">
+    <mat-card>
+        <mat-card-content>
+            <mat-input-container class="example-full-width">
                 <input id="postTitle" formControlName="postTitle"
-                required maxlength="1000" #postTitle mdInput placeholder="Title">
-                <md-hint align="end">{{postTitle.value.length}} / 1000</md-hint>
-            </md-input-container>
-            <md-input-container class="example-full-width">
+                required maxlength="1000" #postTitle matInput placeholder="Title">
+                <mat-hint align="end">{{postTitle.value.length}} / 1000</mat-hint>
+            </mat-input-container>
+            <mat-input-container class="example-full-width">
                 <textarea id="postText" formControlName="postText" (keyup)="resizeInput($event.target)"
-                required maxlength="10000" #postText mdInput placeholder="Main text">
+                required maxlength="10000" #postText matInput placeholder="Main text">
                 </textarea>
-                <md-hint align="end">{{postText.value.length}} / 10000</md-hint>
-            </md-input-container>
+                <mat-hint align="end">{{postText.value.length}} / 10000</mat-hint>
+            </mat-input-container>
             <input type="file" id="fileInput" accept="image/*" (change)="imageUpload($event.target)">
-            <!-- <button aria-label="Attach image" md-icon-button (click)="postText.click()">
-                <md-icon aria-hidden="true">attach_file</md-icon>
+            <!-- <button aria-label="Attach image" mat-icon-button (click)="postText.click()">
+                <mat-icon aria-hidden="true">attach_file</mat-icon>
             </button> -->
-        </md-card-content>
-        <md-card-actions>
+        </mat-card-content>
+        <mat-card-actions>
             <div class="submit">
-                <button type="submit" md-button>Post</button>
+                <button type="submit" mat-button>Post</button>
             </div>
-        </md-card-actions>
-        <md-card-footer *ngIf="loading">
-            <md-progress-bar mode="determinate" [value]="progress"></md-progress-bar>
-        </md-card-footer>
-    </md-card>
+        </mat-card-actions>
+        <mat-card-footer *ngIf="loading">
+            <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+        </mat-card-footer>
+    </mat-card>
 </form>

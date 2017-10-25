@@ -1,13 +1,13 @@
-<h1 md-dialog-title>Fancy Editor</h1>
-<div md-dialog-content>
-    <md-input-container class="example-full-width">
+<h1 mat-dialog-title>Fancy Editor</h1>
+<div mat-dialog-content>
+    <mat-input-container class="example-full-width">
         <textarea id="editPostText" required maxlength="10000" #editPost (keyup)="resizeInput($event.target)"
-        mdInput placeholder="Type your thoughts here" [(ngModel)]="post.description">
+        matInput placeholder="Type your thoughts here" [(ngModel)]="post.description">
         </textarea>
-        <md-hint align="end">{{editPost.value.length}} / 10000</md-hint>
-    </md-input-container>
+        <mat-hint align="end">{{editPost.value.length}} / 10000</mat-hint>
+    </mat-input-container>
 </div>
-<div md-dialog-actions>
-  <button md-button (click)="onYesClick()">Ok</button>
-  <button md-button (click)="onNoClick()">No Thanks</button>
+<div mat-dialog-actions>
+  <button mat-button (click)="onYesClick()">Ok</button>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
 </div>
