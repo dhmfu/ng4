@@ -34,7 +34,6 @@ export class AppComponent implements OnInit{
             document.querySelector('.mat-sidenav-content').addEventListener('scroll', (event: any)=> {
                 let pseudoWindow: Element = event.target;
                 let scrolled = (pseudoWindow.scrollTop/pseudoWindow.scrollHeight)*100;
-                console.log(scrolled);
                 if (scrolled>=17)
                     this.showButton = true;
                 else this.showButton = false;

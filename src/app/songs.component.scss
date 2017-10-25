@@ -29,3 +29,10 @@ table {
         justify-content: center;
     }
 }
+
+div.buttons {
+    margin-top: 10px;
+    width: 210px;
+    display: flex;
+    justify-content: space-between;
+}

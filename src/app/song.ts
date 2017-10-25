@@ -6,11 +6,12 @@ interface SongInterface {
     year: string;
     genre: string;
     filename: string;
+    lyrics: string;
     _id: string;
 };
 
 const KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre', 'filename',
-'_id'];
+'lyrics', '_id'];
 
 export class Song implements SongInterface{
     artist: string;
@@ -20,6 +21,7 @@ export class Song implements SongInterface{
     year: string;
     genre: string;
     filename: string;
+    lyrics: string;
     _id: string;
 
     constructor(song: SongInterface) {
