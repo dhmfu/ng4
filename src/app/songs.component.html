@@ -7,7 +7,10 @@
     </tr>
     <tr *ngFor="let song of songsTemp" [ngClass]="song._id" class="song-row"
     [attr.title]="song.filename">
-        <td><mat-checkbox color="primary"></mat-checkbox></td>
+        <td>
+            <mat-checkbox color="primary" (change)="checkSong($event)">
+            </mat-checkbox>
+        </td>
         <td *ngFor="let key of KEYS">
             <textarea [(ngModel)]="song[key]" placeholder="unknown"
             (keyup)="markAsChanged($event.target)">
@@ -23,7 +26,7 @@
         </td>
     </tr>
 </table>
-<div class="buttons">
+<div class="buttons" *ngIf="newState">
     <button mat-raised-button type="button" (click)="synchronize()">Synchronize</button>
     <button mat-raised-button type="button" (click)="reset()">Reset</button>
 </div>

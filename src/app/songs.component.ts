@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange } from '@angular/material';
 
 import { SongService } from './song.service';
 
@@ -15,9 +15,11 @@ import { Song } from './song';
 export class SongsComponent implements OnInit{
     constructor(private songService: SongService, public dialog: MatDialog) { }
     loading = true;
+    newState = false;
     songs: Song[];
     songsTemp: Song[];
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
+    autocompleteValues = [];
 
     ngOnInit(): void {
         this.songService.getSongs().then((res: Song[])=>{
@@ -31,7 +33,14 @@ export class SongsComponent implements OnInit{
                 this.songsTemp.push(new Song(song));
             });
             this.loading = false;
+            this.prepareAutocomplete(this.songs);
         }).catch((err) => console.log(err));
+    }
+
+    prepareAutocomplete(songs: Song[]): void {
+        this.KEYS.forEach(key => {
+            this.autocompleteValues.push(new Set(this.songs.map(song=>song[key])));
+        });
     }
 
     synchronize(): void {
@@ -42,20 +51,22 @@ export class SongsComponent implements OnInit{
             );
             songs.push(song);
         }
-        if(songs.length)
+        if(songs.length) {
             this.loading = true;
             this.songService.syncSongs(songs).then(res=> {
                 this.songs = [];
                 this.songsTemp.forEach(song => {
                     this.songs.push(new Song(song));
                 });
-                this.songs = this.songsTemp.slice(0);
                 this.loading = false;
+                this.newState = false;
             });
+        }
     }
 
     markAsChanged(element: Element): void {
-        while ((element = element.parentElement) && !element.classList.contains('song-row'));
+        this.newState = true;
+        element = this.findRow(element);
         element.classList.add('changed');
     }
 
@@ -65,13 +76,14 @@ export class SongsComponent implements OnInit{
         this.songs.forEach(song => {
             this.songsTemp.push(new Song(song));
         });
+        this.newState = false;
     }
 
     showLyrics(target: Element, song: Song): void {
         let dialogRef = this.dialog.open(LyricsDialog, {
             data: song,
             height: '80%',
-            width: '50%'
+            width: '30%'
         });
 
         dialogRef.afterClosed().subscribe((data:any)=>{
@@ -84,6 +96,27 @@ export class SongsComponent implements OnInit{
             }
         });
     }
+
+    checkSong(event: MatCheckboxChange): void {
+        let songRow = this.findRow(event.source._elementRef.nativeElement);
+        songRow.classList.toggle('checked');
+        let inputArray:Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
+        if (event.checked) {
+            for (let textarea of inputArray)
+                textarea.setAttribute('disabled', 'true');
+            songRow.querySelector('button').setAttribute('disabled', 'true');
+        } else {
+            for (let textarea of inputArray)
+                textarea.removeAttribute('disabled');
+            songRow.querySelector('button').removeAttribute('disabled');
+        }
+    }
+
+    findRow(element: Element): Element {
+        while ((element = element.parentElement) && !element.classList.contains('song-row'));
+        return element;
+    }
+
 }
 
 @Component({
