@@ -36,9 +36,14 @@ table {
     }
 }
 
-div.buttons {
-    margin-top: 10px;
-    width: 210px;
-    display: flex;
-    justify-content: space-between;
+mat-expansion-panel {
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.table-buttons {
+    button {
+        margin-left: 10px;
+    }
 }

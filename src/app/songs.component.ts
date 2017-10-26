@@ -14,10 +14,12 @@ import { Song } from './song';
 })
 export class SongsComponent implements OnInit{
     constructor(private songService: SongService, public dialog: MatDialog) { }
+    step = 1;
     loading = true;
     newState = false;
     songs: Song[];
     songsTemp: Song[];
+    multiChangeSongs: Song[] = [];
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
     autocompleteValues = [];
 
@@ -99,13 +101,16 @@ export class SongsComponent implements OnInit{
 
     checkSong(event: MatCheckboxChange): void {
         let songRow = this.findRow(event.source._elementRef.nativeElement);
-        songRow.classList.toggle('checked');
-        let inputArray:Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
+        let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
         if (event.checked) {
+            const song = this.songs.find(song => song._id == songRow.classList[1]);
+            this.multiChangeSongs.push(song);
             for (let textarea of inputArray)
                 textarea.setAttribute('disabled', 'true');
             songRow.querySelector('button').setAttribute('disabled', 'true');
         } else {
+            this.multiChangeSongs = this.multiChangeSongs.filter(song =>
+                song._id != songRow.classList[1]);
             for (let textarea of inputArray)
                 textarea.removeAttribute('disabled');
             songRow.querySelector('button').removeAttribute('disabled');

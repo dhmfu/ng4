@@ -6,7 +6,12 @@ import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatListModule, MatToolbarModule, MatIconModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatSidenavModule, MatInputModule, MatCheckboxModule, MatDialogModule, MatProgressBarModule, MatTableModule, MatSortModule } from '@angular/material';
+import {
+    MatListModule, MatToolbarModule, MatIconModule, MatCardModule,
+    MatButtonModule, MatProgressSpinnerModule, MatSidenavModule, MatInputModule,
+    MatCheckboxModule, MatDialogModule, MatProgressBarModule, MatTableModule,
+    MatSortModule, MatAutocompleteModule, MatExpansionModule
+} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -57,7 +62,9 @@ import { AppRoutingModule }     from './app-routing.module';
     MatDialogModule,
     MatProgressBarModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatAutocompleteModule,
+    MatExpansionModule
   ],
   providers: [PostService],
   bootstrap: [AppComponent],
