@@ -2,13 +2,14 @@
 <mat-accordion class="example-headers-align" *ngIf="!loading">
     <mat-expansion-panel (opened)="step=0" [expanded]="step === 0">
         <mat-expansion-panel-header>
-            Change tags of multiple songs
+            Change tags of multiple songs{{ multiChangeSongs.length ? ' &#10004;' : '' }}
         </mat-expansion-panel-header>
 
         <div *ngFor="let key of KEYS; index as i">
             <mat-form-field>
                 <input type="text" matInput [disabled]="!multiChangeSongs.length"
-                [matAutocomplete]="auto" placeholder="{{ key }}">
+                [matAutocomplete]="auto" placeholder="{{ key }}"
+                class="multi-field" id="multi-{{ key }}">
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let option of autocompleteValues[i]"
@@ -19,8 +20,10 @@
         </div>
 
         <mat-action-row>
-            <button mat-button [disabled]="!multiChangeSongs.length">
-                Synchronize</button>
+            <button mat-button (click)="multiSynchronize()"
+            [disabled]="!multiChangeSongs.length">
+                Synchronize
+            </button>
         </mat-action-row>
     </mat-expansion-panel>
 

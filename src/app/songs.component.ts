@@ -41,7 +41,9 @@ export class SongsComponent implements OnInit{
 
     prepareAutocomplete(songs: Song[]): void {
         this.KEYS.forEach(key => {
-            this.autocompleteValues.push(new Set(this.songs.map(song=>song[key])));
+            this.autocompleteValues.push(new Set(
+                this.songs.map(song=>song[key]).filter(value=>value)
+            ));
         });
     }
 
@@ -120,6 +122,19 @@ export class SongsComponent implements OnInit{
     findRow(element: Element): Element {
         while ((element = element.parentElement) && !element.classList.contains('song-row'));
         return element;
+    }
+
+    multiSynchronize(): void {
+        const multiFields = document.querySelectorAll('.multi-field');
+        let inputArray: Array<HTMLInputElement> = Array.prototype.slice.call(multiFields);
+        let changeObj = {};
+        for (let input of inputArray) {
+            if(input.value) {
+                const key = input.id.split('-')[1];
+                changeObj[key] = input.value;
+            }
+        }
+        console.log(changeObj);
     }
 
 }
