@@ -1,0 +1,70 @@
+.sidenav-container {
+    height: 100%;
+
+    .content {
+        margin: 30px 0;
+        padding: 0 5%;
+    }
+
+    .sidenav {
+        width: 200px;
+
+        .header {
+            padding: 16px 16px 8px 16px;
+            border-bottom: 1px solid lightblue;
+
+            .avatar {
+                width: 70px;
+                height: 70px;
+                border-radius: 35px;
+                float: left;
+            }
+
+            .username {
+                display: inline-block;
+                height: 70px;
+                width: 98px;
+                line-height: 70px;
+                text-align: center;
+            }
+
+            .logout {
+                margin-top: 16px;
+                text-align: center;
+            }
+        }
+
+        .body {
+            padding: 8px 16px 0px 16px;
+
+            .active .path{
+                text-decoration: underline;
+            }
+
+            .navigation .path {
+              display: inline-block;
+              margin-left: 20px;
+            }
+        }
+    }
+}
+
+.up-button {
+    position: fixed;
+    bottom: 45px;
+    left: 45px;
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.6523);
+    color: rgba(0, 0, 0, 0.6523);
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 9999;
+
+    &:hover {
+        border: 2px solid rgba(0, 0, 0, 0.870588);
+        color: rgba(0, 0, 0, 0.870588)
+    }
+}
