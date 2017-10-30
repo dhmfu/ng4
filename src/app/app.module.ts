@@ -10,7 +10,7 @@ import {
     MatListModule, MatToolbarModule, MatIconModule, MatCardModule,
     MatButtonModule, MatProgressSpinnerModule, MatSidenavModule, MatInputModule,
     MatCheckboxModule, MatDialogModule, MatProgressBarModule, MatTableModule,
-    MatSortModule, MatAutocompleteModule, MatExpansionModule
+    MatSortModule, MatAutocompleteModule, MatExpansionModule, MatPaginatorModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -64,7 +64,8 @@ import { AppRoutingModule }     from './app-routing.module';
     MatTableModule,
     MatSortModule,
     MatAutocompleteModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatPaginatorModule
   ],
   providers: [PostService],
   bootstrap: [AppComponent],

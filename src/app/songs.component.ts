@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange, PageEvent
+} from '@angular/material';
 
 import { SongService } from './song.service';
 
@@ -23,9 +24,20 @@ export class SongsComponent implements OnInit{
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
     autocompleteValues = [];
     allChecked = false;
+    defaultPageSize = 5;
+    totalLength = 999; // mock-length
+
+
+    private paginationObj = {
+        limit: this.defaultPageSize,
+        skip: 0
+    };
 
     ngOnInit(): void {
-        this.songService.getSongs().then((res: Song[])=>{
+        this.songService.countSongs(this.paginationObj).then(res =>{
+            this.totalLength = res;
+        });
+        this.songService.getSongs(this.paginationObj).then((res: Song[])=>{
             this.songs = res;
             this.songs.sort((a, b) => {
                 if(a.artist == '') return 1;
@@ -158,6 +170,25 @@ export class SongsComponent implements OnInit{
             }
         }
         this.songService.multiSync(changeObj, this.multiChangeSongs).then(res=>console.log(res));
+    }
+
+    pagination(event: PageEvent): void {
+        this.paginationObj = {
+            limit: event.pageSize,
+            skip: event.pageIndex * event.pageSize
+        };
+        this.songService.getSongs(this.paginationObj).then((res: Song[])=>{
+            this.songs = res;
+            this.songs.sort((a, b) => {
+                if(a.artist == '') return 1;
+                return a.artist.localeCompare(b.artist)
+            });
+            this.songsTemp = [];
+            this.songs.forEach(song => {
+                this.songsTemp.push(new Song(song));
+            });
+            this.prepareAutocomplete(this.songs);
+        }).catch((err) => console.log(err));
     }
 
 }

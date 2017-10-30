@@ -11,16 +11,25 @@ export class SongService {
 
     private headers = new Headers({'Content-Type': 'text/plain', 'x-access-token': localStorage.getItem('token')});
 
-    getSongs(): Promise<Song[]> {
+    getSongs(query: any): Promise<Song[]> {
         let options = new RequestOptions({ headers: this.headers});
-
-        return this.http.get('http://localhost:3000/api/songs')
+        query = this.toQuerySting(query);
+        return this.http.get('http://localhost:3000/api/songs'+query)
                .toPromise()
                .then(response => {
                    let songs: Array<any> = response.json();
                    songs = songs.map(song => new Song(song));
                    return songs;
                })
+               .catch(this.handleError);
+    }
+
+    countSongs(query: any): Promise<number> {
+        let options = new RequestOptions({ headers: this.headers});
+        query = this.toQuerySting(query);
+        return this.http.get('http://localhost:3000/api/songs/count'+query)
+               .toPromise()
+               .then(response => response.json())
                .catch(this.handleError);
     }
 
@@ -45,5 +54,13 @@ export class SongService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
+    }
+
+    private toQuerySting(query) {
+        return '?' +
+            Object.keys(query).map(function(key) {
+                return encodeURIComponent(key) + '=' +
+                    encodeURIComponent(query[key]);
+                }).join('&');
     }
 }

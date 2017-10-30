@@ -63,6 +63,10 @@
             </tr>
         </table>
 
+        <mat-paginator [length]="totalLength" [pageSize]="defaultPageSize"
+        (page)="pagination($event)" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+
         <mat-action-row class="table-buttons">
             <button mat-raised-button type="button" [disabled]="!newState"
             (click)="synchronize()">Synchronize</button>
