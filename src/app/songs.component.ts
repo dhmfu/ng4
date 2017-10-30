@@ -19,7 +19,7 @@ export class SongsComponent implements OnInit{
     newState = false;
     songs: Song[];
     songsTemp: Song[];
-    multiChangeSongs: Song[] = [];
+    multiChangeSongs: Array<string> = [];
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
     autocompleteValues = [];
 
@@ -106,13 +106,13 @@ export class SongsComponent implements OnInit{
         let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
         if (event.checked) {
             const song = this.songs.find(song => song._id == songRow.classList[1]);
-            this.multiChangeSongs.push(song);
+            this.multiChangeSongs.push(song._id);
             for (let textarea of inputArray)
                 textarea.setAttribute('disabled', 'true');
             songRow.querySelector('button').setAttribute('disabled', 'true');
         } else {
-            this.multiChangeSongs = this.multiChangeSongs.filter(song =>
-                song._id != songRow.classList[1]);
+            this.multiChangeSongs = this.multiChangeSongs.filter(songId =>
+                songId != songRow.classList[1]);
             for (let textarea of inputArray)
                 textarea.removeAttribute('disabled');
             songRow.querySelector('button').removeAttribute('disabled');
@@ -134,7 +134,7 @@ export class SongsComponent implements OnInit{
                 changeObj[key] = input.value;
             }
         }
-        console.log(changeObj);
+        this.songService.multiSync(changeObj, this.multiChangeSongs).then(res=>console.log(res));
     }
 
 }

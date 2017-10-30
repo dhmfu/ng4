@@ -24,11 +24,22 @@ export class SongService {
                .catch(this.handleError);
     }
 
-    syncSongs(songs: Song[]) {
-        return this.http.post('http://localhost:3000/api/songs', songs)
+    syncSongs(songs: Song[]): Promise<any> {
+        return this.http.post('http://localhost:3000/api/songs/synchronize', songs)
                .toPromise()
                .then(response => response)
                .catch(this.handleError);
+    }
+
+    multiSync(changeObj: any, songsIds: Array<string>): Promise<any> {
+        const request = {
+            properties: changeObj,
+            songs: songsIds
+        };
+        return this.http.post('http://localhost:3000/api/songs/synchronize/multiple', request)
+            .toPromise()
+            .then(response => response)
+            .catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
