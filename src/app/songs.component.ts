@@ -22,6 +22,7 @@ export class SongsComponent implements OnInit{
     multiChangeSongs: Array<string> = [];
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
     autocompleteValues = [];
+    allChecked = false;
 
     ngOnInit(): void {
         this.songService.getSongs().then((res: Song[])=>{
@@ -116,6 +117,28 @@ export class SongsComponent implements OnInit{
             for (let textarea of inputArray)
                 textarea.removeAttribute('disabled');
             songRow.querySelector('button').removeAttribute('disabled');
+        }
+    }
+
+    checkAll(event: MatCheckboxChange): void {
+        const songsRows: Array<Element> = Array.prototype.slice.call(document.querySelectorAll('.song-row'));
+        this.allChecked = event.checked;
+        if(event.checked) {
+            this.multiChangeSongs = this.songsTemp.map(song => song._id);
+            for(const songRow of songsRows) {
+                let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
+                for (let textarea of inputArray)
+                    textarea.setAttribute('disabled', 'true');
+                songRow.querySelector('button').setAttribute('disabled', 'true');
+            }
+        } else {
+            this.multiChangeSongs = [];
+            for(const songRow of songsRows) {
+                let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
+                for (let textarea of inputArray)
+                    textarea.removeAttribute('disabled');
+                songRow.querySelector('button').removeAttribute('disabled');
+            }
         }
     }
 

@@ -33,14 +33,18 @@
         </mat-expansion-panel-header>
         <table>
             <tr>
-                <th></th>
+                <th>
+                    <mat-checkbox color="primary" (change)="checkAll($event)">
+                    </mat-checkbox>
+                </th>
                 <th *ngFor="let key of KEYS">{{ key | uppercase }}</th>
                 <th>{{ 'Lyrics' | uppercase }}</th>
             </tr>
             <tr *ngFor="let song of songsTemp" [ngClass]="song._id" class="song-row"
             [attr.title]="song.filename">
                 <td>
-                    <mat-checkbox color="primary" (change)="checkSong($event)">
+                    <mat-checkbox color="primary" [checked]="allChecked"
+                    (change)="checkSong($event)">
                     </mat-checkbox>
                 </td>
                 <td *ngFor="let key of KEYS">
