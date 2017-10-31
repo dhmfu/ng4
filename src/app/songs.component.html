@@ -31,6 +31,21 @@
         <mat-expansion-panel-header>
             All songs
         </mat-expansion-panel-header>
+        <div class="search">
+            <div class="search-elem" *ngFor="let key of KEYS">
+                <mat-form-field>
+                    <input type="text" matInput [disabled]="loading"
+                    [matAutocomplete]="auto" placeholder="{{ key | titlecase }}"
+                    (keyup)="filterAutocomplete(key, $event.target.value)">
+                </mat-form-field>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of autocompleteShownValues[key]"
+                    [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -39,26 +54,14 @@
                         (change)="checkAll($event)">
                         </mat-checkbox>
                     </th>
-                    <th *ngFor="let key of KEYS">
-                        <mat-form-field>
-                            <input type="text" matInput [matAutocomplete]="auto"
-                            placeholder="{{ key | titlecase }}"
-                            (keyup)="filterAutocomplete(key, $event.target.value)">
-                        </mat-form-field>
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let option of autocompleteShownValues[key]"
-                            [value]="option">
-                                {{ option }}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </th>
-                    <th>Lyrics</th>
+                    <th *ngFor="let key of KEYS">{{ key | titlecase }}</th>
+                    <th>{{ 'Lyrics' | titlecase }}</th>
                 </tr>
             </thead>
             <spinner *ngIf="loading"></spinner>
             <tbody *ngIf="!loading">
-                <tr *ngFor="let song of songsTemp" [ngClass]="song._id" class="song-row"
-                [attr.title]="song.filename">
+                <tr *ngFor="let song of songsTemp" [ngClass]="song._id"
+                class="song-row" [attr.title]="song.filename">
                     <td>
                         <mat-checkbox color="primary" [checked]="allChecked"
                         (change)="checkSong($event)">

@@ -1,50 +1,61 @@
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-
-    tr.changed {
-        background: #ddd;
-    }
-
-    td, th {
-        border: 1px solid #ddd;
-        text-align: left;
-        padding: 8px;
-
-        &:first-child {
-            text-align: center;
-        }
-    }
-
-    td {
-
-        textarea {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid black;
-            font-family: inherit;
-            font-size: inherit;
-            padding: 10px 10px 10px 0;
-            resize: none;
-        }
-
-        .lyrics {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-    }
-}
-
 mat-expansion-panel {
     mat-form-field {
         width: 100%;
     }
-}
 
-.table-buttons {
-    button {
-        margin-left: 10px;
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+
+        tr.changed {
+            background: #ddd;
+        }
+
+        td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+
+            &:first-child {
+                text-align: center;
+            }
+        }
+
+        td {
+
+            textarea {
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid black;
+                font-family: inherit;
+                font-size: inherit;
+                padding: 10px 10px 10px 0;
+                resize: none;
+            }
+
+            .lyrics {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+    .search {
+        display: flex;
+        justify-content: space-between;
+
+        .search-elem {
+            mat-form-field {
+                width: auto;
+            }
+        }
+    }
+
+    .table-buttons {
+        button {
+            margin-left: 10px;
+        }
     }
 }
