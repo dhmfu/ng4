@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange, PageEvent
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange, PageEvent,
+MatAutocompleteSelectedEvent } from '@angular/material';
 
 import { SongService } from './song.service';
 
@@ -15,26 +15,35 @@ import { Song } from './song';
 })
 export class SongsComponent implements OnInit{
     constructor(private songService: SongService, public dialog: MatDialog) { }
-    step = 1;
-    loading = true;
-    newState = false;
+
+    KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
+
     songs: Song[];
     songsTemp: Song[];
+
+    loading = true;
+    newState = false;
+    allChecked = false;
+
     multiChangeSongs: Array<string> = [];
-    KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
+
     autocompleteValues = {};
     autocompleteShownValues = {};
-    allChecked = false;
+
+    filterTimer:any = 0;
+    activeFilters = [];
+
     defaultPageSize = 5;
     totalLength = 999; // mock-length
-
     private paginationObj = {
         limit: this.defaultPageSize,
         skip: 0
     };
+    step = 1;
 
-    private getSongs(): void {
-        this.songService.getSongs(this.paginationObj).then((res: Song[]) => {
+    private getSongs(filter = {}): void {
+        const query = Object.assign(filter, this.paginationObj);
+        this.songService.getSongs(query).then((res: Song[]) => {
             this.songs = res;
             this.songsTemp = [];
             this.songs.forEach(song => {
@@ -47,11 +56,22 @@ export class SongsComponent implements OnInit{
         }).catch((err) => console.log(err));
     }
 
-    ngOnInit(): void {
-        this.songService.countSongs('').then(res => {
+    private getCount(filter = {}): void {
+        this.songService.countSongs(filter).then(res => {
             this.totalLength = res;
         });
-        this.getSongs();
+    }
+
+    private prepareQuery(): Object {
+        let query = {};
+        this.activeFilters.forEach(filter => {
+            query[filter.property] = filter.currentQuery;
+        });
+        return query;
+    }
+
+    ngOnInit(): void {
+        this.performFiltering();
         this.songService.getAutocompletes().then(res => {
             this.autocompleteValues = res;
             this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
@@ -193,6 +213,39 @@ export class SongsComponent implements OnInit{
         .filter(value => pattern.test(value));
     }
 
+    selectAuto(event: MatAutocompleteSelectedEvent, target: HTMLInputElement): void {
+        const query = event.option.value;
+        console.log(event.source.id);
+        // this.filterAutocomplete(query);
+        // target.blur();
+        // this.filterOsmdList(query, 'city', true);
+    }
+
+
+    search(key: string, query: string): void {
+        clearTimeout(this.filterTimer);
+        const specificFilter = this.activeFilters.find(filter => filter.property === key);
+        if (!specificFilter) {
+            this.activeFilters.push({
+                property: key,
+                currentQuery: query
+            });
+        } else {
+            specificFilter.currentQuery = query;
+            if (!query.length) {
+                const index = this.activeFilters.indexOf(specificFilter);
+                this.activeFilters.splice(index, 1);
+            }
+        }
+        this.filterTimer = setTimeout(() => this.performFiltering(), 1000);
+        this.filterAutocomplete(key, query);
+    }
+
+    private performFiltering(): void {
+        const query = this.prepareQuery();
+        this.getSongs(query);
+        this.getCount(query);
+    }
 }
 
 @Component({

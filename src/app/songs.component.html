@@ -36,9 +36,10 @@
                 <mat-form-field>
                     <input type="text" matInput [disabled]="loading"
                     [matAutocomplete]="auto" placeholder="{{ key | titlecase }}"
-                    (keyup)="filterAutocomplete(key, $event.target.value)">
+                    (keyup)="search(key, $event.target.value)">
                 </mat-form-field>
-                <mat-autocomplete #auto="matAutocomplete">
+                <mat-autocomplete #auto="matAutocomplete"
+                (optionSelected)="selectAuto($event)">
                     <mat-option *ngFor="let option of autocompleteShownValues[key]"
                     [value]="option">
                         {{ option }}
