@@ -12,7 +12,6 @@ export class SongService {
     private headers = new Headers({'Content-Type': 'text/plain', 'x-access-token': localStorage.getItem('token')});
 
     getSongs(query: any): Promise<Song[]> {
-        let options = new RequestOptions({ headers: this.headers});
         query = this.toQuerySting(query);
         return this.http.get('http://localhost:3000/api/songs'+query)
                .toPromise()
@@ -25,19 +24,15 @@ export class SongService {
     }
 
     countSongs(query: any): Promise<number> {
-        let options = new RequestOptions({ headers: this.headers});
         query = this.toQuerySting(query);
         return this.http.get('http://localhost:3000/api/songs/count'+query)
-               .toPromise()
-               .then(response => response.json())
+               .toPromise().then(response => response.json())
                .catch(this.handleError);
     }
 
     syncSongs(songs: Song[]): Promise<any> {
         return this.http.post('http://localhost:3000/api/songs/synchronize', songs)
-               .toPromise()
-               .then(response => response)
-               .catch(this.handleError);
+               .toPromise().then(response => response).catch(this.handleError);
     }
 
     multiSync(changeObj: any, songsIds: Array<string>): Promise<any> {
@@ -46,9 +41,12 @@ export class SongService {
             songs: songsIds
         };
         return this.http.post('http://localhost:3000/api/songs/synchronize/multiple', request)
-            .toPromise()
-            .then(response => response)
-            .catch(this.handleError);
+            .toPromise().then(response => response).catch(this.handleError);
+    }
+
+    getAutocompletes(): Promise<Array<string>> {
+        return this.http.get('http://localhost:3000/api/songs/autocomplete')
+            .toPromise().then(response => response.json());
     }
 
     private handleError(error: any): Promise<any> {

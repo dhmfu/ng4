@@ -22,7 +22,8 @@ export class SongsComponent implements OnInit{
     songsTemp: Song[];
     multiChangeSongs: Array<string> = [];
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
-    autocompleteValues = [];
+    AUTOCOMPLETE_KEYS = ['artist', 'album', 'year', 'genre'];
+    autocompleteValues = {};
     allChecked = false;
     defaultPageSize = 5;
     totalLength = 999; // mock-length
@@ -34,29 +35,19 @@ export class SongsComponent implements OnInit{
     };
 
     ngOnInit(): void {
-        this.songService.countSongs(this.paginationObj).then(res =>{
+        this.songService.countSongs(this.paginationObj).then(res => {
             this.totalLength = res;
         });
-        this.songService.getSongs(this.paginationObj).then((res: Song[])=>{
+        this.songService.getSongs(this.paginationObj).then((res: Song[]) => {
             this.songs = res;
-            this.songs.sort((a, b) => {
-                if(a.artist == '') return 1;
-                return a.artist.localeCompare(b.artist)
-            });
             this.songsTemp = [];
             this.songs.forEach(song => {
                 this.songsTemp.push(new Song(song));
             });
             this.loading = false;
-            this.prepareAutocomplete(this.songs);
         }).catch((err) => console.log(err));
-    }
-
-    prepareAutocomplete(songs: Song[]): void {
-        this.KEYS.forEach(key => {
-            this.autocompleteValues.push(new Set(
-                this.songs.map(song=>song[key]).filter(value=>value)
-            ));
+        this.songService.getAutocompletes().then(res => {
+            this.autocompleteValues = res;
         });
     }
 
@@ -154,7 +145,7 @@ export class SongsComponent implements OnInit{
         }
     }
 
-    findRow(element: Element): Element {
+    private findRow(element: Element): Element {
         while ((element = element.parentElement) && !element.classList.contains('song-row'));
         return element;
     }
@@ -177,17 +168,16 @@ export class SongsComponent implements OnInit{
             limit: event.pageSize,
             skip: event.pageIndex * event.pageSize
         };
+        this.loading = true;
+        this.multiChangeSongs = [];
+        this.allChecked = false;
         this.songService.getSongs(this.paginationObj).then((res: Song[])=>{
             this.songs = res;
-            this.songs.sort((a, b) => {
-                if(a.artist == '') return 1;
-                return a.artist.localeCompare(b.artist)
-            });
             this.songsTemp = [];
             this.songs.forEach(song => {
                 this.songsTemp.push(new Song(song));
             });
-            this.prepareAutocomplete(this.songs);
+            this.loading = false;
         }).catch((err) => console.log(err));
     }
 
