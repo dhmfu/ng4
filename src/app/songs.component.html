@@ -4,10 +4,10 @@
             Change tags of multiple songs{{ multiChangeSongs.length ? ' &#10004;' : '' }}
         </mat-expansion-panel-header>
 
-        <div *ngFor="let key of AUTOCOMPLETE_KEYS">
+        <div *ngFor="let key of KEYS">
             <mat-form-field>
                 <input type="text" matInput [disabled]="!multiChangeSongs.length"
-                [matAutocomplete]="auto" placeholder="{{ key }}"
+                [matAutocomplete]="auto" placeholder="{{ key | titlecase }}"
                 class="multi-field" id="multi-{{ key }}"
                 (keyup)="filterAutocomplete(key, $event.target.value)">
             </mat-form-field>
@@ -35,11 +35,24 @@
             <thead>
                 <tr>
                     <th>
-                        <mat-checkbox color="primary" (change)="checkAll($event)">
+                        <mat-checkbox color="primary" [(ngModel)]="allChecked"
+                        (change)="checkAll($event)">
                         </mat-checkbox>
                     </th>
-                    <th *ngFor="let key of KEYS">{{ key | uppercase }}</th>
-                    <th>{{ 'Lyrics' | uppercase }}</th>
+                    <th *ngFor="let key of KEYS">
+                        <mat-form-field>
+                            <input type="text" matInput [matAutocomplete]="auto"
+                            placeholder="{{ key | titlecase }}"
+                            (keyup)="filterAutocomplete(key, $event.target.value)">
+                        </mat-form-field>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of autocompleteShownValues[key]"
+                            [value]="option">
+                                {{ option }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </th>
+                    <th>Lyrics</th>
                 </tr>
             </thead>
             <spinner *ngIf="loading"></spinner>

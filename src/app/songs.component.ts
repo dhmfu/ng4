@@ -22,7 +22,6 @@ export class SongsComponent implements OnInit{
     songsTemp: Song[];
     multiChangeSongs: Array<string> = [];
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
-    AUTOCOMPLETE_KEYS = ['artist', 'album', 'year', 'genre'];
     autocompleteValues = {};
     autocompleteShownValues = {};
     allChecked = false;
@@ -49,7 +48,7 @@ export class SongsComponent implements OnInit{
     }
 
     ngOnInit(): void {
-        this.songService.countSongs(this.paginationObj).then(res => {
+        this.songService.countSongs('').then(res => {
             this.totalLength = res;
         });
         this.getSongs();
@@ -128,7 +127,6 @@ export class SongsComponent implements OnInit{
 
     checkAll(event: MatCheckboxChange): void {
         const songsRows: Array<Element> = Array.prototype.slice.call(document.querySelectorAll('.song-row'));
-        this.allChecked = event.checked;
         if(event.checked) {
             this.multiChangeSongs = this.songsTemp.map(song => song._id);
             for(const songRow of songsRows) {

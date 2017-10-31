@@ -46,7 +46,14 @@ export class SongService {
 
     getAutocompletes(): Promise<Array<string>> {
         return this.http.get('http://localhost:3000/api/songs/autocomplete')
-            .toPromise().then(response => response.json());
+            .toPromise().then(response => {
+                let autocompletes = response.json();
+                Object.keys(autocompletes).forEach(key => {
+                    autocompletes[key] = autocompletes[key]
+                    .filter((v, i, a) => a.indexOf(v) === i); 
+                });
+                return autocompletes;
+            });
     }
 
     private handleError(error: any): Promise<any> {
