@@ -24,20 +24,17 @@ export class SongsComponent implements OnInit{
     KEYS = ['artist', 'title', 'album', 'track', 'year', 'genre'];
     AUTOCOMPLETE_KEYS = ['artist', 'album', 'year', 'genre'];
     autocompleteValues = {};
+    autocompleteShownValues = {};
     allChecked = false;
     defaultPageSize = 5;
     totalLength = 999; // mock-length
-
 
     private paginationObj = {
         limit: this.defaultPageSize,
         skip: 0
     };
 
-    ngOnInit(): void {
-        this.songService.countSongs(this.paginationObj).then(res => {
-            this.totalLength = res;
-        });
+    private getSongs(): void {
         this.songService.getSongs(this.paginationObj).then((res: Song[]) => {
             this.songs = res;
             this.songsTemp = [];
@@ -45,9 +42,20 @@ export class SongsComponent implements OnInit{
                 this.songsTemp.push(new Song(song));
             });
             this.loading = false;
+            this.newState = false;
+            this.allChecked = false;
+            this.multiChangeSongs = [];
         }).catch((err) => console.log(err));
+    }
+
+    ngOnInit(): void {
+        this.songService.countSongs(this.paginationObj).then(res => {
+            this.totalLength = res;
+        });
+        this.getSongs();
         this.songService.getAutocompletes().then(res => {
             this.autocompleteValues = res;
+            this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
         });
     }
 
@@ -61,13 +69,8 @@ export class SongsComponent implements OnInit{
         }
         if(songs.length) {
             this.loading = true;
-            this.songService.syncSongs(songs).then(res=> {
-                this.songs = [];
-                this.songsTemp.forEach(song => {
-                    this.songs.push(new Song(song));
-                });
-                this.loading = false;
-                this.newState = false;
+            this.songService.syncSongs(songs).then(res => {
+                this.getSongs();
             });
         }
     }
@@ -160,7 +163,11 @@ export class SongsComponent implements OnInit{
                 changeObj[key] = input.value;
             }
         }
-        this.songService.multiSync(changeObj, this.multiChangeSongs).then(res=>console.log(res));
+        this.loading = true;
+        this.step = 1;
+        this.songService.multiSync(changeObj, this.multiChangeSongs).then(res=>{
+            this.getSongs();
+        });
     }
 
     pagination(event: PageEvent): void {
@@ -171,6 +178,7 @@ export class SongsComponent implements OnInit{
         this.loading = true;
         this.multiChangeSongs = [];
         this.allChecked = false;
+        this.newState = false;
         this.songService.getSongs(this.paginationObj).then((res: Song[])=>{
             this.songs = res;
             this.songsTemp = [];
@@ -179,6 +187,12 @@ export class SongsComponent implements OnInit{
             });
             this.loading = false;
         }).catch((err) => console.log(err));
+    }
+
+    filterAutocomplete(key: string, query: string): void {
+        const pattern = new RegExp(query, 'i');
+        this.autocompleteShownValues[key] = this.autocompleteValues[key]
+        .filter(value => pattern.test(value));
     }
 
 }

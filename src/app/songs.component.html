@@ -1,4 +1,3 @@
-<spinner *ngIf="loading"></spinner>
 <mat-accordion class="example-headers-align">
     <mat-expansion-panel (opened)="step=0" [expanded]="step === 0">
         <mat-expansion-panel-header>
@@ -9,10 +8,11 @@
             <mat-form-field>
                 <input type="text" matInput [disabled]="!multiChangeSongs.length"
                 [matAutocomplete]="auto" placeholder="{{ key }}"
-                class="multi-field" id="multi-{{ key }}">
+                class="multi-field" id="multi-{{ key }}"
+                (keyup)="filterAutocomplete(key, $event.target.value)">
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of autocompleteValues[key]"
+                <mat-option *ngFor="let option of autocompleteShownValues[key]"
                 [value]="option">
                     {{ option }}
                 </mat-option>
@@ -31,36 +31,41 @@
         <mat-expansion-panel-header>
             All songs
         </mat-expansion-panel-header>
-        <table *ngIf="!loading">
-            <tr>
-                <th>
-                    <mat-checkbox color="primary" (change)="checkAll($event)">
-                    </mat-checkbox>
-                </th>
-                <th *ngFor="let key of KEYS">{{ key | uppercase }}</th>
-                <th>{{ 'Lyrics' | uppercase }}</th>
-            </tr>
-            <tr *ngFor="let song of songsTemp" [ngClass]="song._id" class="song-row"
-            [attr.title]="song.filename">
-                <td>
-                    <mat-checkbox color="primary" [checked]="allChecked"
-                    (change)="checkSong($event)">
-                    </mat-checkbox>
-                </td>
-                <td *ngFor="let key of KEYS">
-                    <textarea [(ngModel)]="song[key]" placeholder="unknown"
-                    (keyup)="markAsChanged($event.target)">
-                    </textarea>
-                </td>
-                <td>
-                    <div class="lyrics">
-                        <button mat-icon-button type="button"
-                        (click)="showLyrics($event.target, song)">
-                            <mat-icon>music_note</mat-icon>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <mat-checkbox color="primary" (change)="checkAll($event)">
+                        </mat-checkbox>
+                    </th>
+                    <th *ngFor="let key of KEYS">{{ key | uppercase }}</th>
+                    <th>{{ 'Lyrics' | uppercase }}</th>
+                </tr>
+            </thead>
+            <spinner *ngIf="loading"></spinner>
+            <tbody *ngIf="!loading">
+                <tr *ngFor="let song of songsTemp" [ngClass]="song._id" class="song-row"
+                [attr.title]="song.filename">
+                    <td>
+                        <mat-checkbox color="primary" [checked]="allChecked"
+                        (change)="checkSong($event)">
+                        </mat-checkbox>
+                    </td>
+                    <td *ngFor="let key of KEYS">
+                        <textarea [(ngModel)]="song[key]" placeholder="unknown"
+                        (keyup)="markAsChanged($event.target)">
+                        </textarea>
+                    </td>
+                    <td>
+                        <div class="lyrics">
+                            <button mat-icon-button type="button"
+                            (click)="showLyrics($event.target, song)">
+                                <mat-icon>music_note</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <mat-paginator [length]="totalLength" [pageSize]="defaultPageSize"
