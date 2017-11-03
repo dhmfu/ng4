@@ -63,6 +63,13 @@ export class SongsComponent implements OnInit{
         });
     }
 
+    private getAutocompletes(): void {
+        this.songService.getAutocompletes().then(res => {
+            this.autocompleteValues = res;
+            this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
+        });
+    }
+
     private prepareQuery(): Object {
         let query = {};
         this.activeFilters.forEach(filter => {
@@ -73,10 +80,7 @@ export class SongsComponent implements OnInit{
 
     ngOnInit(): void {
         this.performFiltering();
-        this.songService.getAutocompletes().then(res => {
-            this.autocompleteValues = res;
-            this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
-        });
+        this.getAutocompletes();
     }
 
     synchronize(): void {
@@ -91,6 +95,7 @@ export class SongsComponent implements OnInit{
             this.loading = true;
             this.songService.syncSongs(songs).then(res => {
                 this.performFiltering();
+                this.getAutocompletes();
             });
         }
     }
@@ -185,7 +190,8 @@ export class SongsComponent implements OnInit{
         this.loading = true;
         this.step = 1;
         this.songService.multiSync(changeObj, this.multiChangeSongs).then(res=>{
-            this.getSongs();
+            this.performFiltering();
+            this.getAutocompletes();
         });
     }
 
@@ -225,10 +231,6 @@ export class SongsComponent implements OnInit{
     search(key: string, query: string): void {
         clearTimeout(this.filterTimer);
         const specificFilter = this.activeFilters.find(filter => filter.property === key);
-        this.paginationObj = {
-            limit: this.defaultPageSize,
-            skip: 0
-        };
         query = query.trim();
         if (!specificFilter) {
             this.activeFilters.push({
@@ -250,6 +252,10 @@ export class SongsComponent implements OnInit{
     }
 
     private performFiltering(): void {
+        this.paginationObj = {
+            limit: this.defaultPageSize,
+            skip: 0
+        };
         this.getSongs();
         this.getCount();
     }
