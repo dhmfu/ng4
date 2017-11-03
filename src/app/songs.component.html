@@ -34,12 +34,12 @@
         <div class="search">
             <div class="search-elem" *ngFor="let key of KEYS">
                 <mat-form-field>
-                    <input type="text" matInput [disabled]="loading"
+                    <input type="text" matInput #input
                     [matAutocomplete]="auto" placeholder="{{ key | titlecase }}"
-                    (keyup)="search(key, $event.target.value)">
+                    (keyup)="searchInput(key, $event)">
                 </mat-form-field>
                 <mat-autocomplete #auto="matAutocomplete"
-                (optionSelected)="selectAuto($event)">
+                (optionSelected)="selectAuto($event, input)">
                     <mat-option *ngFor="let option of autocompleteShownValues[key]"
                     [value]="option">
                         {{ option }}
@@ -86,7 +86,8 @@
         </table>
 
         <mat-paginator [length]="totalLength" [pageSize]="defaultPageSize"
-        (page)="pagination($event)" [pageSizeOptions]="[5, 10, 25, 100]">
+        (page)="pagination($event)" [pageSizeOptions]="[5, 10, 25, 100]"
+        [pageIndex]="paginationObj.skip/paginationObj.limit">
         </mat-paginator>
 
         <mat-action-row class="table-buttons">

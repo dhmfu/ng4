@@ -39,10 +39,11 @@ export class SongsComponent implements OnInit{
         limit: this.defaultPageSize,
         skip: 0
     };
+
     step = 1;
 
-    private getSongs(filter = {}): void {
-        const query = Object.assign(filter, this.paginationObj);
+    private getSongs(): void {
+        const query = this.prepareQuery();
         this.songService.getSongs(query).then((res: Song[]) => {
             this.songs = res;
             this.songsTemp = [];
@@ -56,8 +57,8 @@ export class SongsComponent implements OnInit{
         }).catch((err) => console.log(err));
     }
 
-    private getCount(filter = {}): void {
-        this.songService.countSongs(filter).then(res => {
+    private getCount(): void {
+        this.songService.countSongs(this.prepareQuery()).then(res => {
             this.totalLength = res;
         });
     }
@@ -67,7 +68,7 @@ export class SongsComponent implements OnInit{
         this.activeFilters.forEach(filter => {
             query[filter.property] = filter.currentQuery;
         });
-        return query;
+        return Object.assign(query, this.paginationObj);
     }
 
     ngOnInit(): void {
@@ -89,7 +90,7 @@ export class SongsComponent implements OnInit{
         if(songs.length) {
             this.loading = true;
             this.songService.syncSongs(songs).then(res => {
-                this.getSongs();
+                this.performFiltering();
             });
         }
     }
@@ -195,16 +196,7 @@ export class SongsComponent implements OnInit{
         };
         this.loading = true;
         this.multiChangeSongs = [];
-        this.allChecked = false;
-        this.newState = false;
-        this.songService.getSongs(this.paginationObj).then((res: Song[])=>{
-            this.songs = res;
-            this.songsTemp = [];
-            this.songs.forEach(song => {
-                this.songsTemp.push(new Song(song));
-            });
-            this.loading = false;
-        }).catch((err) => console.log(err));
+        this.getSongs();
     }
 
     filterAutocomplete(key: string, query: string): void {
@@ -215,16 +207,29 @@ export class SongsComponent implements OnInit{
 
     selectAuto(event: MatAutocompleteSelectedEvent, target: HTMLInputElement): void {
         const query = event.option.value;
-        console.log(event.source.id);
-        // this.filterAutocomplete(query);
-        // target.blur();
-        // this.filterOsmdList(query, 'city', true);
+        const key = target.placeholder.toLowerCase();
+        this.search(key, query);
+        target.blur();
+    }
+
+    searchInput(key: string, event: any): void {
+        const NON_INPUT_KEYSCODES = [13, 16, 17, 27, 144, 18, 20, 42, 36, 35, 33,
+            34, 91, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112];
+        if (NON_INPUT_KEYSCODES.some(keycode => keycode === event.keyCode))
+            return;
+        else
+            this.search(key, event.target.value);
     }
 
 
     search(key: string, query: string): void {
         clearTimeout(this.filterTimer);
         const specificFilter = this.activeFilters.find(filter => filter.property === key);
+        this.paginationObj = {
+            limit: this.defaultPageSize,
+            skip: 0
+        };
+        query = query.trim();
         if (!specificFilter) {
             this.activeFilters.push({
                 property: key,
@@ -237,14 +242,16 @@ export class SongsComponent implements OnInit{
                 this.activeFilters.splice(index, 1);
             }
         }
-        this.filterTimer = setTimeout(() => this.performFiltering(), 1000);
+        this.loading = true;
+        this.filterTimer = setTimeout(() => {
+            this.performFiltering();
+        }, 500);
         this.filterAutocomplete(key, query);
     }
 
     private performFiltering(): void {
-        const query = this.prepareQuery();
-        this.getSongs(query);
-        this.getCount(query);
+        this.getSongs();
+        this.getCount();
     }
 }
 
