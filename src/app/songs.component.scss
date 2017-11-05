@@ -49,6 +49,10 @@ mat-expansion-panel {
         .search-elem {
             mat-form-field {
                 width: auto;
+
+                mat-icon {
+                    cursor: pointer;
+                }
             }
         }
     }

@@ -29,7 +29,7 @@
 
     <mat-expansion-panel (opened)="step=1" [expanded]="step === 1">
         <mat-expansion-panel-header>
-            All songs
+            Songs
         </mat-expansion-panel-header>
         <div class="search">
             <div class="search-elem" *ngFor="let key of KEYS">
@@ -37,11 +37,15 @@
                     <input type="text" matInput #input
                     [matAutocomplete]="auto" placeholder="{{ key | titlecase }}"
                     (keyup)="searchInput(key, $event)">
+                    <mat-icon *ngIf="input.value.length" matSuffix
+                    (click)="resetInput(input, key)">
+                        clear
+                    </mat-icon>
                 </mat-form-field>
                 <mat-autocomplete #auto="matAutocomplete"
                 (optionSelected)="selectAuto($event, input)">
-                    <mat-option *ngFor="let option of autocompleteShownValues[key]"
-                    [value]="option">
+                    <mat-option [value]="option"
+                    *ngFor="let option of autocompleteShownValues[key]">
                         {{ option }}
                     </mat-option>
                 </mat-autocomplete>

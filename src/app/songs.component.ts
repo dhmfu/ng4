@@ -219,17 +219,20 @@ export class SongsComponent implements OnInit{
     }
 
     searchInput(key: string, event: any): void {
-        const NON_INPUT_KEYSCODES = [13, 16, 17, 27, 144, 18, 20, 42, 36, 35, 33,
-            34, 91, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112];
+        clearTimeout(this.filterTimer);
+        const NON_INPUT_KEYSCODES = [9, 13, 16, 17, 27, 144, 18, 20, 42, 36, 35,
+            33, 34, 91, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113,
+            112, 37, 38, 39, 40, 225];
         if (NON_INPUT_KEYSCODES.some(keycode => keycode === event.keyCode))
             return;
         else
-            this.search(key, event.target.value);
+            this.filterTimer = setTimeout(() => {
+                this.search(key, event.target.value);
+            }, 500);
     }
 
 
     search(key: string, query: string): void {
-        clearTimeout(this.filterTimer);
         const specificFilter = this.activeFilters.find(filter => filter.property === key);
         query = query.trim();
         if (!specificFilter) {
@@ -245,9 +248,7 @@ export class SongsComponent implements OnInit{
             }
         }
         this.loading = true;
-        this.filterTimer = setTimeout(() => {
-            this.performFiltering();
-        }, 500);
+        this.performFiltering();
         this.filterAutocomplete(key, query);
     }
 
@@ -258,6 +259,16 @@ export class SongsComponent implements OnInit{
         };
         this.getSongs();
         this.getCount();
+    }
+
+    resetInput(target: HTMLInputElement, key: string): void {
+        clearTimeout(this.filterTimer);
+        target.value = '';
+        target.blur();
+        this.loading = true;
+        this.activeFilters = this.activeFilters.filter(filter =>
+            filter.property != key);
+        this.performFiltering();
     }
 }
 
