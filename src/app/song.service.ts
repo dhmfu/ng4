@@ -50,7 +50,7 @@ export class SongService {
                 let autocompletes = response.json();
                 Object.keys(autocompletes).forEach(key => {
                     autocompletes[key] = autocompletes[key]
-                    .filter((v, i, a) => a.indexOf(v) === i); 
+                    .filter((v, i, a) => a.indexOf(v) === i);
                 });
                 return autocompletes;
             });
@@ -62,6 +62,10 @@ export class SongService {
     }
 
     private toQuerySting(query) {
+        Object.keys(query).forEach(key => {
+            if(typeof query[key] == 'string')
+                query[key] = query[key].replace(/([[\^$.|?*+()])/g, '\\$1');
+        });
         return '?' +
             Object.keys(query).map(function(key) {
                 return encodeURIComponent(key) + '=' +
