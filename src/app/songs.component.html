@@ -1,14 +1,15 @@
 <mat-accordion class="example-headers-align">
     <mat-expansion-panel (opened)="step=0" [expanded]="step === 0">
         <mat-expansion-panel-header>
-            Change tags of multiple songs{{ multiChangeSongs.length ? ' &#10004;' : '' }}
+            Change tags of multiple songs
+            {{ multiChangeSongs.length ? '&#10004;' : '' }}
         </mat-expansion-panel-header>
 
         <div *ngFor="let key of KEYS">
             <mat-form-field>
-                <input type="text" matInput [disabled]="!multiChangeSongs.length"
+                <input type="text" [disabled]="!multiChangeSongs.length"
                 [matAutocomplete]="auto" placeholder="{{ key | titlecase }}"
-                class="multi-field" id="multi-{{ key }}"
+                class="multi-field" id="multi-{{ key }}" matInput
                 (keyup)="filterAutocomplete(key, $event.target.value)">
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
@@ -74,7 +75,7 @@
                     </td>
                     <td *ngFor="let key of KEYS">
                         <textarea [(ngModel)]="song[key]" placeholder="unknown"
-                        (keyup)="markAsChanged($event.target)">
+                        (keyup)="markAsChanged($event.target)" rows="1">
                         </textarea>
                     </td>
                     <td>

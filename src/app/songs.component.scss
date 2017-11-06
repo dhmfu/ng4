@@ -15,7 +15,7 @@ mat-expansion-panel {
         td, th {
             border: 1px solid #ddd;
             text-align: left;
-            padding: 8px;
+            padding: 10px;
 
             &:first-child {
                 text-align: center;
@@ -30,8 +30,9 @@ mat-expansion-panel {
                 border-bottom: 1px solid black;
                 font-family: inherit;
                 font-size: inherit;
-                padding: 10px 10px 10px 0;
+                padding: 10px 0;
                 resize: none;
+                width: 100%;
             }
 
             .lyrics {
@@ -47,8 +48,9 @@ mat-expansion-panel {
         justify-content: space-between;
 
         .search-elem {
+            width: 15%;
+
             mat-form-field {
-                width: auto;
 
                 mat-icon {
                     cursor: pointer;

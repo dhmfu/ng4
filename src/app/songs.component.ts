@@ -27,7 +27,7 @@ export class SongsComponent implements OnInit{
 
     multiChangeSongs: Array<string> = [];
 
-    autocompleteValues = {};
+    private autocompleteValues = {};
     autocompleteShownValues = {};
 
     filterTimer:any = 0;
@@ -268,6 +268,7 @@ export class SongsComponent implements OnInit{
         this.loading = true;
         this.activeFilters = this.activeFilters.filter(filter =>
             filter.property != key);
+        this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
         this.performFiltering();
     }
 }
