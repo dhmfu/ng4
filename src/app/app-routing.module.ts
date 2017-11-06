@@ -1,12 +1,12 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './login.component';
-import { PostsComponent} from './posts.component';
-import { UsersComponent } from './users.component';
-import { SongsComponent } from './songs.component';
+import { LoginComponent } from './login/login.component';
+import { PostsComponent} from './posts/posts.component';
+import { UsersComponent } from './users/users.component';
+import { SongsComponent } from './songs/songs.component';
 
-import { LoggedIn } from './login.service';
+import { LoggedIn } from './login/login.service';
 
 const routes: Routes = [
     {

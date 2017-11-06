@@ -15,17 +15,17 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login.component';
-import { PostsComponent, PostEditDialog, PostImageDialog } from './posts.component';
-import { NewPostComponent } from './new-post.component';
-import { UsersComponent } from './users.component';
-import { SpinnerComponent } from './spinner.component';
-import { SongsComponent, LyricsDialog } from './songs.component';
+import { LoginComponent } from './login/login.component';
+import { PostsComponent, PostEditDialog, PostImageDialog } from './posts/posts.component';
+import { NewPostComponent } from './posts/new-post.component';
+import { UsersComponent } from './users/users.component';
+import { SpinnerComponent } from './additionals/spinner/spinner.component';
+import { SongsComponent, LyricsDialog } from './songs/songs.component';
 
-import { PostService } from './post.service';
-import { LoginService, LoggedIn } from './login.service';
-import { UserService } from './users.service';
-import { SongService } from './song.service';
+import { PostService } from './posts/post.service';
+import { LoginService, LoggedIn } from './login/login.service';
+import { UserService } from './users/users.service';
+import { SongService } from './songs/song.service';
 
 import { AppRoutingModule }     from './app-routing.module';
 
