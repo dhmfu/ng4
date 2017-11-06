@@ -74,9 +74,11 @@
                         </mat-checkbox>
                     </td>
                     <td *ngFor="let key of KEYS">
-                        <textarea [(ngModel)]="song[key]" placeholder="unknown"
-                        (keyup)="markAsChanged($event.target)" rows="1">
-                        </textarea>
+                        <mat-form-field>
+                            <input [(ngModel)]="song[key]" matInput
+                            placeholder="{{ key | titlecase}}"
+                            (keyup)="markAsChanged($event.target)">
+                        </mat-form-field>
                     </td>
                     <td>
                         <div class="lyrics">

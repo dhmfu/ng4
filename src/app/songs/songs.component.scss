@@ -15,25 +15,29 @@ mat-expansion-panel {
         td, th {
             border: 1px solid #ddd;
             text-align: left;
-            padding: 10px;
+            padding: 10px 10px 0 10px;
 
             &:first-child {
                 text-align: center;
+                padding: 10px;
+            }
+        }
+
+        th {
+            &:nth-child(5) {
+                width: 50px;
+            }
+
+            &:nth-child(6) {
+                width: 60px;
+            }
+
+            &:nth-child(7) {
+                width: 200px;
             }
         }
 
         td {
-
-            textarea {
-                background: transparent;
-                border: none;
-                border-bottom: 1px solid black;
-                font-family: inherit;
-                font-size: inherit;
-                padding: 10px 0;
-                resize: none;
-                width: 100%;
-            }
 
             .lyrics {
                 align-items: center;

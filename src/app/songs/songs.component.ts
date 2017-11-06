@@ -135,18 +135,18 @@ export class SongsComponent implements OnInit{
 
     checkSong(event: MatCheckboxChange): void {
         let songRow = this.findRow(event.source._elementRef.nativeElement);
-        let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
+        let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('input'));
         if (event.checked) {
             const song = this.songs.find(song => song._id == songRow.classList[1]);
             this.multiChangeSongs.push(song._id);
-            for (let textarea of inputArray)
-                textarea.setAttribute('disabled', 'true');
+            for (let input of inputArray)
+                input.setAttribute('disabled', 'true');
             songRow.querySelector('button').setAttribute('disabled', 'true');
         } else {
             this.multiChangeSongs = this.multiChangeSongs.filter(songId =>
                 songId != songRow.classList[1]);
-            for (let textarea of inputArray)
-                textarea.removeAttribute('disabled');
+            for (let input of inputArray)
+                input.removeAttribute('disabled');
             songRow.querySelector('button').removeAttribute('disabled');
         }
     }
@@ -156,17 +156,17 @@ export class SongsComponent implements OnInit{
         if(event.checked) {
             this.multiChangeSongs = this.songsTemp.map(song => song._id);
             for(const songRow of songsRows) {
-                let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
-                for (let textarea of inputArray)
-                    textarea.setAttribute('disabled', 'true');
+                let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('input'));
+                for (let input of inputArray)
+                    input.setAttribute('disabled', 'true');
                 songRow.querySelector('button').setAttribute('disabled', 'true');
             }
         } else {
             this.multiChangeSongs = [];
             for(const songRow of songsRows) {
-                let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('textarea'));
-                for (let textarea of inputArray)
-                    textarea.removeAttribute('disabled');
+                let inputArray: Array<Element> = Array.prototype.slice.call(songRow.querySelectorAll('input'));
+                for (let input of inputArray)
+                    input.removeAttribute('disabled');
                 songRow.querySelector('button').removeAttribute('disabled');
             }
         }
@@ -253,10 +253,7 @@ export class SongsComponent implements OnInit{
     }
 
     private performFiltering(): void {
-        this.paginationObj = {
-            limit: this.defaultPageSize,
-            skip: 0
-        };
+        this.paginationObj.skip = 0;
         this.getSongs();
         this.getCount();
     }
