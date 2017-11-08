@@ -27,10 +27,10 @@ export class SongsComponent implements OnInit{
 
     multiChangeSongs: Array<string> = [];
 
-    private autocompleteValues = {};
-    autocompleteShownValues = {};
+    autocompleteValues = {};
 
     filterTimer:any = 0;
+    autocompleteTimer = [];
     activeFilters = [];
 
     defaultPageSize = 5;
@@ -63,13 +63,6 @@ export class SongsComponent implements OnInit{
         });
     }
 
-    private getAutocompletes(): void {
-        this.songService.getAutocompletes().then(res => {
-            this.autocompleteValues = res;
-            this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
-        });
-    }
-
     private prepareQuery(): Object {
         let query = {};
         this.activeFilters.forEach(filter => {
@@ -80,7 +73,6 @@ export class SongsComponent implements OnInit{
 
     ngOnInit(): void {
         this.performFiltering();
-        this.getAutocompletes();
     }
 
     synchronize(): void {
@@ -95,7 +87,6 @@ export class SongsComponent implements OnInit{
             this.loading = true;
             this.songService.syncSongs(songs).then(res => {
                 this.performFiltering();
-                this.getAutocompletes();
             });
         }
     }
@@ -191,7 +182,6 @@ export class SongsComponent implements OnInit{
         this.step = 1;
         this.songService.multiSync(changeObj, this.multiChangeSongs).then(res=>{
             this.performFiltering();
-            this.getAutocompletes();
         });
     }
 
@@ -205,30 +195,36 @@ export class SongsComponent implements OnInit{
         this.getSongs();
     }
 
-    filterAutocomplete(key: string, query: string): void {
-        const pattern = new RegExp(query, 'i');
-        this.autocompleteShownValues[key] = this.autocompleteValues[key]
-        .filter(value => pattern.test(value));
-    }
-
     selectAuto(event: MatAutocompleteSelectedEvent, target: HTMLInputElement): void {
         const query = event.option.value;
         const key = target.placeholder.toLowerCase();
         this.search(key, query);
+        clearTimeout(this.filterTimer);
+        this.autocompleteValues[key] = [query];
         target.blur();
     }
 
     searchInput(key: string, event: any): void {
-        clearTimeout(this.filterTimer);
         const NON_INPUT_KEYSCODES = [9, 13, 16, 17, 27, 144, 18, 20, 42, 36, 35,
             33, 34, 91, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113,
             112, 37, 38, 39, 40, 225];
         if (NON_INPUT_KEYSCODES.some(keycode => keycode === event.keyCode))
             return;
-        else
+        else {
+            this.filterAutocomplete(key, event.target.value);
+            clearTimeout(this.filterTimer);
             this.filterTimer = setTimeout(() => {
                 this.search(key, event.target.value);
-            }, 500);
+            }, 2500);
+        }
+    }
+
+    filterAutocomplete(key: string, query: string): void {
+        clearTimeout(this.autocompleteTimer[key]);
+        this.autocompleteTimer[key] = setTimeout(() => {
+            this.songService.getAutocompletes({key: key, query: query})
+            .then(res => this.autocompleteValues[key] = res);
+        }, 100);
     }
 
 
@@ -249,7 +245,6 @@ export class SongsComponent implements OnInit{
         }
         this.loading = true;
         this.performFiltering();
-        this.filterAutocomplete(key, query);
     }
 
     private performFiltering(): void {
@@ -260,12 +255,13 @@ export class SongsComponent implements OnInit{
 
     resetInput(target: HTMLInputElement, key: string): void {
         clearTimeout(this.filterTimer);
+        clearTimeout(this.autocompleteTimer[key]);
+        this.autocompleteValues[key] = [];
         target.value = '';
         target.blur();
         this.loading = true;
         this.activeFilters = this.activeFilters.filter(filter =>
             filter.property != key);
-        this.autocompleteShownValues = Object.assign({}, this.autocompleteValues);
         this.performFiltering();
     }
 }

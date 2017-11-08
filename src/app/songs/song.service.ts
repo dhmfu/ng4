@@ -23,7 +23,7 @@ export class SongService {
                .catch(this.handleError);
     }
 
-    countSongs(query: any): Promise<number> {
+    countSongs(query): Promise<number> {
         query = this.toQuerySting(query);
         return this.http.get('http://localhost:3000/api/songs/count'+query)
                .toPromise().then(response => response.json())
@@ -35,7 +35,7 @@ export class SongService {
                .toPromise().then(response => response).catch(this.handleError);
     }
 
-    multiSync(changeObj: any, songsIds: Array<string>): Promise<any> {
+    multiSync(changeObj, songsIds: Array<string>): Promise<any> {
         const request = {
             properties: changeObj,
             songs: songsIds
@@ -44,19 +44,13 @@ export class SongService {
             .toPromise().then(response => response).catch(this.handleError);
     }
 
-    getAutocompletes(): Promise<Array<string>> {
-        return this.http.get('http://localhost:3000/api/songs/autocomplete')
-            .toPromise().then(response => {
-                let autocompletes = response.json();
-                Object.keys(autocompletes).forEach(key => {
-                    autocompletes[key] = autocompletes[key]
-                    .filter((v, i, a) => a.indexOf(v) === i);
-                });
-                return autocompletes;
-            });
+    getAutocompletes(filter): Promise<Array<string>> {
+        const query = this.toQuerySting(filter);
+        return this.http.get('http://localhost:3000/api/songs/autocompletes'+query)
+            .toPromise().then(response => response.json());
     }
 
-    private handleError(error: any): Promise<any> {
+    private handleError(error): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     }

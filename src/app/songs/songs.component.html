@@ -13,7 +13,7 @@
                 (keyup)="filterAutocomplete(key, $event.target.value)">
             </mat-form-field>
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of autocompleteShownValues[key]"
+                <mat-option *ngFor="let option of autocompleteValues[key]"
                 [value]="option">
                     {{ option }}
                 </mat-option>
@@ -46,7 +46,7 @@
                 <mat-autocomplete #auto="matAutocomplete"
                 (optionSelected)="selectAuto($event, input)">
                     <mat-option [value]="option"
-                    *ngFor="let option of autocompleteShownValues[key]">
+                    *ngFor="let option of autocompleteValues[key]">
                         {{ option }}
                     </mat-option>
                 </mat-autocomplete>
